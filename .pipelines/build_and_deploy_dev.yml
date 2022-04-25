@@ -1,0 +1,213 @@
+
+trigger:
+  branches:
+    include:
+    # Replace the following with actual branch name(s) in your repo for which you want to trigger a build. The assumption here is that you only want to only trigger on a change to a specific branch rather than a change on any branch which would include your working branch for development.'
+    - main
+  paths:
+    include: 
+    - vs-code-logicapp-testing
+    
+name: 1.0.$(Date:yyyyMMdd)$(Rev:.r)
+
+# NOTE: If you want to use different values for these variables, you can remove the variable group and attach them directly to this pipeline. The group specified below is a variable group defined in the Library for the Pipelines
+variables:
+- name: RepoFolder
+  value: "vs-code-logicapp-testing"
+- name: "Azure_ServiceConnection"
+  value: "IntegrationPlaybook-Azure-Pipelines"
+- name: "LogicApp_Name_Without_Environment"
+  value: "ms-la-testing"
+- name: "LogicApp_Name_With_Environment"
+  value: "ms-la-testing-dev"
+- name: "Solution_FileName"
+  value: "vs-code-logicapp-testing.sln"
+- name: "system.debug"
+  value: true
+
+
+jobs:
+- job: Logic_App_Build_Package_UnitTest
+  displayName: 'Build Package and Run Unit Tests'
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+
+    #What: List the environment variables in the pipeline at this point
+    #Why: When troubleshooting we often need to check which environment variables are set
+    - powershell: |
+        #Displays all of the environment variables for tooubleshooting
+        gci env:* | sort-object name
+      displayName: 'Display Environment Variables'
+
+    #What: List the files in the build source directory
+    #Why: When troubleshooting this is a common folder we want to recursively check what is in it at various points in the pipeline
+    - powershell: 'Get-ChildItem -Path $(System.DefaultWorkingDirectory) -Recurse '
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      displayName: 'List Directory - $(System.DefaultWorkingDirectory)'
+
+    #What: Install Azurite
+    #Why: We need this for func.exe to use to simulate storage
+    - task: Npm@1
+      displayName: 'npm install Azurite'
+      inputs:
+        command: custom
+        verbose: false
+        customCommand: 'install azurite -g'
+
+    #What: Install Chocolatey on the build agent
+    #Why: We might want to use some packages in the build so we will install chocolatey
+    - task: gep13.chocolatey-azuredevops.chocolatey-tool-installer-azuredevops.ChocolateyToolInstaller@0
+      displayName: 'Use Chocolatey'
+
+    #What: Install Func core tools with chocolatey 
+    #Why: If we install with npm then it doesnt set the path variable    
+    - task: CmdLine@2
+      displayName: 'Install Functions Core Tools'
+      inputs:
+        script: 'choco install azure-functions-core-tools-3 --version 3.0.3785 -y --params "''/x64''"' 
+
+    #What: Build the solution
+    #Why: We need to build the solution so we can run the tests later
+    - task: DotNetCoreCLI@2
+      displayName: 'Build the solution'
+      inputs:
+        command: 'build'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/$(RepoFolder)'
+
+    #What: Copy logic app files to a directory to package it up
+    #Why: We will copy the files to the staging directory then package it up.  We need to modify some of the files for deployments to each environment
+    - task: CopyFiles@2
+      displayName: 'Create folder to package logic app'
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)/$(RepoFolder)/logicapp'
+        Contents: |
+          **
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/logicapp-package'
+
+    #What: Remove files which arent needed in the package
+    #Why: Some files in the logic app folder are for vs code and are not needed when deploying to other environments
+    - task: DeleteFiles@1
+      displayName: 'Remove files not needed by Logic App'
+      inputs:
+        SourceFolder: $(Build.ArtifactStagingDirectory)/logicapp-package
+        Contents: |
+            global.json                        
+            local.settings.json
+            *.md
+            worflow-designtime            
+        RemoveDotFiles: true
+
+    #What: Zip up the logic app directory 
+    #Why: This zip will be published to the artifact feed for deployment to environments
+    - task: ArchiveFiles@2
+      displayName: 'Create Zip containing logic app'
+      inputs:
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/logicapp-package'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(LogicApp_Name_Without_Environment).zip'
+        replaceExistingArchive: true
+
+    #What: List the files in the $(Build.ArtifactStagingDirectory) directory
+    #Why: To help troubleshooting we will list what is in the package directory before we publish it
+    - powershell: 'Get-ChildItem -Path $(Build.ArtifactStagingDirectory) -Recurse '
+      workingDirectory: '$(Build.ArtifactStagingDirectory)'
+      displayName: 'List Directory - $(Build.ArtifactStagingDirectory)'
+
+    #What: Publish artifact
+    #Why: Publish the packaged logic app so we can deploy it to environments from the artifact feed
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish zip as pipeline artifact'
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/$(LogicApp_Name_Without_Environment).zip'
+        artifact: '$(LogicApp_Name_Without_Environment)'
+        publishLocation: 'pipeline'    
+
+    #What: Start Azurite
+    #Why: The logic app running locally will need azurite running for storage for the functions runtime
+    - task: Bash@3
+      displayName: 'Start Azurite'
+      inputs:
+        targetType: 'inline'
+        script: azurite --silent --location c:\azurite --debug c:\azurite\debug.log &
+
+    #What: Run unit tests
+    #Why: These tests will be ran against the functions runtime on the local machine
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Unit Tests'
+      enabled: false
+      inputs:
+        command: 'test'
+        publishTestResults: true
+        testRunTitle: '$(BUILD.DEFINITIONNAME) Unit Tests'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/$(RepoFolder)/logicapp.testing.unittests'
+
+- job: Logic_App_Deploy_And_AcceptanceTests
+  displayName: 'Deploy to Dev and Acceptance Tests'
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+    
+    #What: Download the build artefact onto the build agent so we can deploy it
+    #Why: We package in the first job and publish but if we deploy and test here it will simulate deployments to other environments
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download the Build Artefact'
+      inputs:
+        buildType: 'current'
+        buildVersionToDownload: 'latest'
+        downloadType: 'single'
+        path: '$(System.DefaultWorkingDirectory)'
+        artifactName: '$(LogicApp_Name_Without_Environment)'
+
+    #What: List the environment variables in the pipeline at this point
+    #Why: When troubleshooting we often need to check which environment variables are set
+    - powershell: |
+        #Displays all of the environment variables for tooubleshooting
+        gci env:* | sort-object name
+      displayName: 'Display Environment Variables'
+
+    #What: List the files in the build source directory
+    #Why: When troubleshooting this is a common folder we want to recursively so we can see the source code
+    - powershell: 'Get-ChildItem -Path $(System.DefaultWorkingDirectory) -Recurse '
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      displayName: 'List Directory - $(System.DefaultWorkingDirectory)'
+
+    #What: List the files in the $(Build.ArtifactStagingDirectory)
+    #Why: When troubleshooting this will help us see the artifacts that were downloaded
+    - powershell: 'Get-ChildItem -Path $(System.ArtifactsDirectory) -Recurse '
+      workingDirectory: '$(System.ArtifactsDirectory)'
+      displayName: 'List Directory - $(System.ArtifactsDirectory)'
+
+    #What: Build the solution
+    #Why: We will build the solution so that we can run the acceptance tests
+    - task: DotNetCoreCLI@2
+      displayName: 'Build the solution'
+      inputs:
+        command: 'build'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/$(RepoFolder)'
+
+    #What: Deploy the logic app package using the functions deploy task
+    #Why: The functions deploy task is the default way to deploy a logic app which is packaged as a zip file
+    #Note: we are deploying the logic app from the deployment package we downloaded from the artifact
+    - task: AzureFunctionApp@1
+      displayName: 'Deploy Logic App Workflows'
+      inputs:
+        azureSubscription: '$(Azure_ServiceConnection)'
+        appType: 'workflowapp'
+        appName: '$(LogicApp_Name_With_Environment)'
+        package: '$(System.DefaultWorkingDirectory)/$(LogicApp_Name_Without_Environment).zip'
+        deploymentMethod: 'zipDeploy'
+    
+    #What: Run the acceptance tests
+    #Why: dotnet test is executed on the acceptance test directory to run those tests which will run against the deployed logic app
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Acceptance Tests'
+      inputs:
+        command: 'test'
+        publishTestResults: true
+        testRunTitle: '$(BUILD.DEFINITIONNAME) Acceptance Tests'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/$(RepoFolder)/logicapp.testing.acceptancetests'
+
+
+

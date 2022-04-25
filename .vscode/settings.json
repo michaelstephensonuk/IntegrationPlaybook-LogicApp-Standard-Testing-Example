@@ -1,0 +1,20 @@
+{
+    "azureLogicAppsStandard.deploySubpath": "logicapp",
+    "azureLogicAppsStandard.projectLanguage": "JavaScript",
+    "azureLogicAppsStandard.projectRuntime": "~3",
+    "debug.internalConsoleOptions": "neverOpen",
+    "explorer.compactFolders": false,
+    "files.exclude": {
+        //Hide azurite files from root
+        "__azurite*": true,
+        "__blobstorage__": true,
+        "__queuestorage__": true,
+
+        //Hide bin/obj and test results folders from any sub folders
+        "**/bin": true,
+        "**/obj": true,
+        "**/TestResults": true,
+        //Hide Azurite files from any sub folders
+        "**/__azurite*": true,
+    }
+}

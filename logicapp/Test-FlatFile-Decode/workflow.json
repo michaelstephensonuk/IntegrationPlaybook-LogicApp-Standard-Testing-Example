@@ -1,0 +1,57 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Response": {
+                "type": "Response",
+                "kind": "http",
+                "inputs": {
+                    "statusCode": 200,
+                    "body": "@body('Flat_File_Decoding')"
+                },
+                "runAfter": {
+                    "Flat_File_Decoding": [
+                        "Succeeded"
+                    ]
+                }
+            },
+            "Initialize_variable_-_Name": {
+                "type": "InitializeVariable",
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "value": "@{triggerOutputs()['headers']['schemaname']}"
+                        }
+                    ]
+                },
+                "runAfter": {}
+            },
+            "Flat_File_Decoding": {
+                "type": "FlatFileDecoding",
+                "inputs": {
+                    "content": "@triggerBody()",
+                    "schema": {
+                        "name": "@variables('name')"
+                    }
+                },
+                "runAfter": {
+                    "Initialize_variable_-_Name": [
+                        "Succeeded"
+                    ]
+                }
+            }
+        },
+        "triggers": {
+            "manual": {
+                "type": "Request",
+                "kind": "Http",
+                "inputs": {}
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {}
+    },
+    "kind": "Stateful"
+}

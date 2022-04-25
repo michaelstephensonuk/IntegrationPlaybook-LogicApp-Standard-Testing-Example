@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			// Source code
+			"name": "LogicApp",
+			"path": "..\\logicapp"
+		  },		  
+	],
+	"settings": {
+		"debug.internalConsoleOptions": "neverOpen"
+	}
+}

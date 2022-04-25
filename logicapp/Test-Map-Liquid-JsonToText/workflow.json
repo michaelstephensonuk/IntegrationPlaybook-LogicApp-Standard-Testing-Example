@@ -1,0 +1,61 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Response": {
+                "type": "Response",
+                "kind": "http",
+                "inputs": {
+                    "statusCode": 200,
+                    "headers": {
+                        "Content-Type": "text/plain"
+                    },
+                    "body": "@body('Transform_JSON_To_TEXT')"
+                },
+                "runAfter": {
+                    "Transform_JSON_To_TEXT": [
+                        "Succeeded"
+                    ]
+                }
+            },
+            "Initialize_variable_-_Name": {
+                "type": "InitializeVariable",
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "value": "@{triggerOutputs()['headers']['mapname']}"
+                        }
+                    ]
+                },
+                "runAfter": {}
+            },
+            "Transform_JSON_To_TEXT": {
+                "type": "Liquid",
+                "kind": "JsonToText",
+                "inputs": {
+                    "content": "@triggerBody()",
+                    "map": {
+                        "name": "@variables('name')"
+                    }
+                },
+                "runAfter": {
+                    "Initialize_variable_-_Name": [
+                        "Succeeded"
+                    ]
+                }
+            }
+        },
+        "triggers": {
+            "manual": {
+                "type": "Request",
+                "kind": "Http",
+                "inputs": {}
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {}
+    },
+    "kind": "Stateful"
+}

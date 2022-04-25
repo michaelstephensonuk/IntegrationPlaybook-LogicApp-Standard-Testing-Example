@@ -1,0 +1,30 @@
+{
+  "dataverse_audience": {
+    "type": "String",
+    "value": "@appsetting('dataverse_audience')"
+  },
+  "dataverse_client_id": {
+    "type": "String",
+    "value": "@appsetting('dataverse_client_id')"
+  },
+  "dataverse_client_secret": {
+    "type": "String",
+    "value": "@appsetting('dataverse_client_secret')"
+  },
+  "dataverse_tenant_id": {
+    "type": "String",
+    "value": "@appsetting('dataverse_tenant_id')"
+  },
+  "postman_echo_url": {
+    "type": "String",
+    "value": "@appsetting('postman_echo_url')"
+  },
+  "apim_url": {
+    "type": "String",
+    "value": "@appsetting('apim_url')"
+  },
+  "apim_subscription_key": {
+    "type": "String",
+    "value": "@appsetting('apim_subscription_key')"
+  }
+}

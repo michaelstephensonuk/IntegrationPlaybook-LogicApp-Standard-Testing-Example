@@ -1,0 +1,35 @@
+{
+  "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "actions": {
+          "Compose_-_Log_Message_Received": {
+              "inputs": "@triggerBody()",
+              "runAfter": {},
+              "type": "Compose"
+          },
+          "Response": {
+              "inputs": {
+                  "body": "@outputs('Compose_-_Log_Message_Received')",
+                  "statusCode": 200
+              },
+              "kind": "http",
+              "runAfter": {
+                  "Compose_-_Log_Message_Received": [
+                      "Succeeded"
+                  ]
+              },
+              "type": "Response"
+          }
+      },
+      "contentVersion": "1.0.0.0",
+      "outputs": {},
+      "triggers": {
+          "manual": {
+              "inputs": {},
+              "kind": "Http",
+              "type": "Request"
+          }
+      }
+  },
+  "kind": "Stateless"
+}

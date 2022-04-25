@@ -1,0 +1,1450 @@
+<xs:schema xmlns="http://IntegrationAccount.Borque_Import_ShipOrder" xmlns:b="http://schemas.microsoft.com/BizTalk/2003"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://IntegrationAccount.Borque_Import_ShipOrder">
+    <xs:annotation>
+        <xs:appinfo>
+            <schemaEditorExtension:schemaInfo
+                xmlns:schemaEditorExtension="http://schemas.microsoft.com/BizTalk/2003/SchemaEditorExtensions"
+                namespaceAlias="b"
+                extensionClass="Microsoft.Azure.Integration.DesignTools.FlatFileExtension.FlatFileExtension"
+                standardName="Flat File" />
+            <b:schemaInfo standard="Flat File" codepage="65001" default_pad_char=" " pad_char_type="char"
+                count_positions_by_byte="false" parser_optimization="speed" lookahead_depth="3"
+                suppress_empty_nodes="false" generate_empty_nodes="true" allow_early_termination="false"
+                early_terminate_optional_fields="false" allow_message_breakup_of_infix_root="false"
+                compile_parse_tables="false" root_reference="ShipOrder" />
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:element name="ShipOrder">
+        <xs:annotation>
+            <xs:appinfo>
+                <b:recordInfo structure="delimited" child_delimiter_type="hex" child_delimiter="0xD 0xA"
+                    child_order="postfix" sequence_number="1" preserve_delimiter_for_empty_data="true"
+                    suppress_trailing_delimiters="false" />
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:annotation>
+                    <xs:appinfo>
+                        <groupInfo xmlns="http://schemas.microsoft.com/BizTalk/2003" sequence_number="0" />
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:element minOccurs="1" maxOccurs="1" name="BOF">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <b:recordInfo structure="delimited" child_delimiter_type="char" child_delimiter="~"
+                                child_order="infix" sequence_number="1" preserve_delimiter_for_empty_data="true"
+                                suppress_trailing_delimiters="false" tag_name="$BOF" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    <b:groupInfo sequence_number="0" />
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:element minOccurs="0" maxOccurs="1" name="Text" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="1" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="1" maxOccurs="1" name="BOB">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <b:recordInfo structure="delimited" child_order="infix" sequence_number="2"
+                                preserve_delimiter_for_empty_data="true" suppress_trailing_delimiters="false"
+                                tag_name="$BOB" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    <b:groupInfo sequence_number="0" />
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:element minOccurs="0" maxOccurs="1" name="Text" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="1" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="1" maxOccurs="1" name="OH">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <b:recordInfo structure="delimited" child_delimiter_type="char" child_delimiter="~"
+                                child_order="postfix" sequence_number="3" preserve_delimiter_for_empty_data="true"
+                                suppress_trailing_delimiters="false" tag_name="OH~" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    <groupInfo xmlns="http://schemas.microsoft.com/BizTalk/2003" sequence_number="0" />
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:element minOccurs="0" maxOccurs="1" name="origin_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="1" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="order_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="2" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="plant_id" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="3" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="order_date" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="4" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="sched_ship_date" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="5" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="request_dlv_date" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="6" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="sched_load_date" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="7" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="trans_mode_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="8" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="9" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="fob" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="10" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="11" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_name" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="12" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_name2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="13" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_addr1" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="14" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_addr2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="15" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_addr3" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="16" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_city" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="17" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_state" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="18" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_zip" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="19" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_billto_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="20" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_billto_name" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="21" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_billto_name2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="22" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_billto_addr1" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="23" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_billto_addr2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="24" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_billto_addr3" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="25" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_billto_city" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="26" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_billto_state" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="27" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_billto_zip" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="28" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="29" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_name" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="30" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_name2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="31" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_addr1" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="32" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_addr2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="33" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_addr3" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="34" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_city" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="35" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_state" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="36" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_zip" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="37" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="route_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="38" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="route_dscr" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="39" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="departing_carrier" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="40" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="delivering_carrier" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="41" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="origin_city" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="42" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="origin_state" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="43" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="origin_splc" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="44" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="dest_city" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="45" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="dest_state" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="46" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="dest_splc" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="47" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="switch_bill" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="48" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="switch_type_1" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="49" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="switch_road_1" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="50" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="switch_jct_1" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="51" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="switch_type_2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="52" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="switch_road_2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="53" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="switch_jct_2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="54" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="supply_site" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="55" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="road" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="56" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="entry_user_id" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="57" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="lab_release_type" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="58" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="scac_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="59" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="carrier_name" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="60" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="load_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="61" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="req_no_of_equip" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="62" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="req_qty" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="63" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="req_qty_uom" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="64" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="partner_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="65" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="order_type" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="66" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="partner_order_ind" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="67" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="trip_lease_ind" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="68" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="csr_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="69" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="sales_rep" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="70" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="railcar_pool_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="71" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="railcar_lessee_name" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="72" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="arc_ind" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="73" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="arc_date" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="74" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="origin_port" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="75" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="dest_port" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="76" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="voyage_type" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="77" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="req_equipment_type" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="78" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="req_equipment_owner" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="79" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="record_seq_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="80" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="customer_epa_fac_id" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="81" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="shipper_epa_fac_id" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="82" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="delivery_group" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="83" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="linked_order_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="84" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="_x0033_P">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <b:recordInfo structure="delimited" child_delimiter_type="char" child_delimiter="~"
+                                child_order="postfix" sequence_number="4" preserve_delimiter_for_empty_data="true"
+                                suppress_trailing_delimiters="false" tag_name="3P~" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    <groupInfo xmlns="http://schemas.microsoft.com/BizTalk/2003" sequence_number="0" />
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:element minOccurs="0" maxOccurs="1" name="party_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="1" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="company_name" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="2" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="company_name2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="3" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="addr1" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="4" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="addr2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="5" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="addr3" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="6" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="city" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="7" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="state" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="8" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="zip" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="9" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="address_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="10" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="address_entity_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="11" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="stopoff_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="12" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="epa_fac_id" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="13" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="reference_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="14" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="reference_dscr" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="15" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="edi_contact_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="16" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="edi_contact_name" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="17" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="edi_contact_phone" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="18" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="edi_contact_fax" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="19" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="edi_contact_email" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="20" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="edi_contact_ext" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="21" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="edi_id_qualifier" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="22" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="edi_id_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="23" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="RF">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <b:recordInfo structure="delimited" child_delimiter_type="char" child_delimiter="~"
+                                child_order="postfix" sequence_number="5" preserve_delimiter_for_empty_data="true"
+                                suppress_trailing_delimiters="false" tag_name="RF~" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    <groupInfo xmlns="http://schemas.microsoft.com/BizTalk/2003" sequence_number="0" />
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:element minOccurs="0" maxOccurs="1" name="reference_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="1" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="reference_dscr" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="2" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="road" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="3" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="stopoff_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="4" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="reference_date" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="5" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="6" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="first_route_segment_road" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="7" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="first_route_segment_splc" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="8" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="9" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="freight_pay_address_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="10" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="first_route_segment_city" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="11" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="first_route_segment_state" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="12" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="first_route_segment_r260" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="13" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="1" maxOccurs="1" name="PD">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <b:recordInfo structure="delimited" child_delimiter_type="char" child_delimiter="~"
+                                child_order="postfix" sequence_number="6" preserve_delimiter_for_empty_data="true"
+                                suppress_trailing_delimiters="false" tag_name="PD~" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    <groupInfo xmlns="http://schemas.microsoft.com/BizTalk/2003" sequence_number="0" />
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:element minOccurs="0" maxOccurs="1" name="car_init" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="1" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="car_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="2" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="compart_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="3" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="4" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_name" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="5" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_stcc" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="6" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="quantity" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="7" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_um" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="8" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="bol_dscr" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="9" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="lbs_per_gal_60" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="10" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="out_ins" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="11" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="out_percent" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="12" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="out_gal" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="13" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="load_temp" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="14" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="corr_factor" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="15" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="table_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="16" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="lfvc" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="17" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="unit_price" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="18" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="price_uom" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="19" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="odor_ind" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="20" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="odor_wt" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="21" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="odor_uom" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="22" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="odor_comm_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="23" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="french_bol_dscr" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="24" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="oil_spill_plan_yorn" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="25" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="waste_yorn" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="26" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_name2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="27" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_ref1" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="28" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_ref2" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="29" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_ref3" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="30" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_ref4" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="31" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="material_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="32" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="interface_line_item_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="33" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="sched_yard_id" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="34" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="sched_track_id" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="35" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="sched_spot_id" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="36" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="interface_comm_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="37" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="load_slip" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="38" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="prod_storage_id" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="39" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="dest_temp" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="40" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="load_temp_open" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="41" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="ambient_temp" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="42" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="cts" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="43" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="cps" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="44" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="load_pressure" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="45" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="load_pressure_open" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="46" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="gravity" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="47" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="alt_comm_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="48" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comm_short_name" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="49" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="blend_product_ind" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="50" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="quality_code" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="51" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="process_order_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="52" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="CM">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <b:recordInfo structure="delimited" child_delimiter_type="char" child_delimiter="~"
+                                child_order="infix" sequence_number="7" preserve_delimiter_for_empty_data="true"
+                                suppress_trailing_delimiters="false" tag_name="CM~" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    <groupInfo xmlns="http://schemas.microsoft.com/BizTalk/2003" sequence_number="0" />
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comment_no" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="1" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="comment" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="2" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="display_order" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="3" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="1" maxOccurs="1" name="EOB">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <b:recordInfo structure="delimited" child_order="infix" sequence_number="8"
+                                preserve_delimiter_for_empty_data="true" suppress_trailing_delimiters="false"
+                                tag_name="$EOB" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    <b:groupInfo sequence_number="0" />
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:element minOccurs="0" maxOccurs="1" name="Text" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo sequence_number="1" justification="left" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="1" maxOccurs="1" name="EOF">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <b:recordInfo structure="delimited" child_order="infix" sequence_number="9"
+                                preserve_delimiter_for_empty_data="true" suppress_trailing_delimiters="false"
+                                tag_name="$EOF" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:annotation>
+                                <xs:appinfo>
+                                    <b:groupInfo sequence_number="0" />
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:element minOccurs="0" maxOccurs="1" name="Text" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <b:fieldInfo justification="left" sequence_number="1" />
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

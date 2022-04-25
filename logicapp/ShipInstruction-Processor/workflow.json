@@ -1,0 +1,202 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Compose_-_Request_as_Json": {
+                "type": "Compose",
+                "inputs": "@json(xml(triggerBody()))",
+                "runAfter": {}
+            },
+            "Condition_-_Is_Petrochemical": {
+                "type": "If",
+                "expression": {
+                    "and": [
+                        {
+                            "equals": [
+                                "@body('Parse_JSON_-_Ship_Event')?['DeliveryNotify']?['Delivery']?['Commodity']",
+                                "Petrochemical"
+                            ]
+                        }
+                    ]
+                },
+                "actions": {
+                    "Send_Data_-_Log_Start": {
+                        "type": "ApiConnection",
+                        "inputs": {
+                            "host": {
+                                "connection": {
+                                    "referenceName": "azureloganalyticsdatacollector"
+                                }
+                            },
+                            "method": "post",
+                            "body": "{\n\"key1_name\":\"DeliveryId\",\n\"key1_value\":\"@{body('Parse_JSON_-_Ship_Event')?['DeliveryNotify']?['Delivery']?['DeliveryId']}\",\n\"logicapp_name\":\"@{workflow()['name']}\",\n\"logicapp_runid\":\"@{workflow()['run']['name']}\"\n}",
+                            "headers": {
+                                "Log-Type": "logicapps"
+                            },
+                            "path": "/api/logs"
+                        },
+                        "runAfter": {}
+                    },
+                    "HTTP_-_Lookup_Data": {
+                        "type": "Http",
+                        "inputs": {
+                            "method": "GET",
+                            "uri": "@{parameters('apim_url')}/logicapptesting/mockapi/shipinstructioninfo",
+                            "headers": {
+                                "Ocp-Apim-Subscription-Key": "@parameters('apim_subscription_key')"
+                            },
+                            "queries": {
+                                "shipid": "@body('Parse_JSON_-_Ship_Event')?['DeliveryNotify']?['Delivery']?['DeliveryId']"
+                            }
+                        },
+                        "runAfter": {
+                            "Send_Data_-_Log_Start": [
+                                "Succeeded"
+                            ]
+                        }
+                    },
+                    "Compose_-_Convert_to_Json": {
+                        "type": "Compose",
+                        "inputs": "@json(body('HTTP_-_Lookup_Data'))",
+                        "runAfter": {
+                            "HTTP_-_Lookup_Data": [
+                                "Succeeded"
+                            ]
+                        }
+                    },
+                    "Transform_JSON_To_TEXT": {
+                        "type": "Liquid",
+                        "kind": "JsonToText",
+                        "inputs": {
+                            "content": "@outputs('Compose_-_Convert_to_Json')",
+                            "map": {
+                                "name": "ShipInstructionMap.liquid"
+                            }
+                        },
+                        "runAfter": {
+                            "Compose_-_Convert_to_Json": [
+                                "Succeeded"
+                            ]
+                        }
+                    },
+                    "Flat_File_Encoding": {
+                        "type": "FlatFileEncoding",
+                        "inputs": {
+                            "content": "@body('Transform_JSON_To_TEXT')",
+                            "schema": {
+                                "name": "ShipInstructionFlatFile.xsd"
+                            }
+                        },
+                        "runAfter": {
+                            "Transform_JSON_To_TEXT": [
+                                "Succeeded"
+                            ]
+                        }
+                    },
+                    "Response": {
+                        "type": "Response",
+                        "kind": "http",
+                        "inputs": {
+                            "statusCode": 200,
+                            "body": "@body('Flat_File_Encoding')"
+                        },
+                        "runAfter": {
+                            "Flat_File_Encoding": [
+                                "Succeeded"
+                            ]
+                        }
+                    }
+                },
+                "runAfter": {
+                    "Parse_JSON_-_Ship_Event": [
+                        "Succeeded"
+                    ]
+                },
+                "else": {
+                    "actions": {
+                        "Compose_-_Log_Not_Petrochemical": {
+                            "type": "Compose",
+                            "inputs": "The event is not for a petrochemical commodity",
+                            "runAfter": {}
+                        },
+                        "Terminate_-_Not_Petrochemical": {
+                            "type": "Terminate",
+                            "inputs": {
+                                "runStatus": "Failed",
+                                "runError": {
+                                    "code": "500",
+                                    "message": "Not petrochemical"
+                                }
+                            },
+                            "runAfter": {
+                                "Compose_-_Log_Not_Petrochemical": [
+                                    "Succeeded"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "Parse_JSON_-_Ship_Event": {
+                "type": "ParseJson",
+                "inputs": {
+                    "content": "@outputs('Compose_-_Request_as_Json')",
+                    "schema": {
+                        "properties": {
+                            "DeliveryNotify": {
+                                "properties": {
+                                    "Delivery": {
+                                        "properties": {
+                                            "BillOfLading": {
+                                                "type": [
+                                                    "string",
+                                                    "null"
+                                                ]
+                                            },
+                                            "CargoId": {
+                                                "type": "string"
+                                            },
+                                            "Commodity": {
+                                                "type": "string"
+                                            },
+                                            "DeliveryId": {
+                                                "type": "string"
+                                            },
+                                            "DeliveryStatus": {
+                                                "type": "string"
+                                            },
+                                            "OrderPriority": {
+                                                "type": [
+                                                    "string",
+                                                    "null"
+                                                ]
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {
+                    "Compose_-_Request_as_Json": [
+                        "Succeeded"
+                    ]
+                }
+            }
+        },
+        "triggers": {
+            "manual": {
+                "type": "Request",
+                "kind": "Http",
+                "inputs": {}
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {}
+    },
+    "kind": "Stateful"
+}

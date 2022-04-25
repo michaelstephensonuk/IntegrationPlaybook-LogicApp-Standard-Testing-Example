@@ -1,0 +1,93 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Compose_-_Message_Body": {
+                "type": "Compose",
+                "inputs": "@triggerOutputs()?['body']?['contentData']",
+                "runAfter": {
+                    "Initialize_variable_-_Delivery_ID": [
+                        "Succeeded"
+                    ]
+                }
+            },
+            "Call_Ship_Instruction_Processor": {
+                "type": "Workflow",
+                "inputs": {
+                    "host": {
+                        "workflow": {
+                            "id": "ShipInstruction-Processor"
+                        }
+                    },
+                    "headers": {
+                        "DeliveryId": "@variables('deliveryId')",
+                        "DeliveryID": ""
+                    },
+                    "body": "@outputs('Compose_-_Message_Body')"
+                },
+                "runAfter": {
+                    "Send_Data_-_Log_Start": [
+                        "Succeeded"
+                    ]
+                }
+            },
+            "Initialize_variable_-_Delivery_ID": {
+                "type": "InitializeVariable",
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "deliveryId",
+                            "type": "string",
+                            "value": "@{string(triggerOutputs()?['body']?['userProperties']?['DeliveryId'])}"
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "trackedProperties": {
+                    "DeliveryId": "@action().inputs.variables[0].value"
+                }
+            },
+            "Send_Data_-_Log_Start": {
+                "type": "ApiConnection",
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "referenceName": "azureloganalyticsdatacollector"
+                        }
+                    },
+                    "method": "post",
+                    "body": "{\n\"key1_name\":\"DeliveryId\",\n\"key1_value\":\"@{variables('deliveryId')}\",\n\"logicapp_name\":\"@{workflow()['name']}\",\n\"logicapp_runid\":\"@{workflow()['run']['name']}\"\n}",
+                    "headers": {
+                        "Log-Type": "logicapps"
+                    },
+                    "path": "/api/logs"
+                },
+                "runAfter": {
+                    "Compose_-_Message_Body": [
+                        "Succeeded"
+                    ]
+                }
+            }
+        },
+        "triggers": {
+            "When_messages_are_available_in_a_queue": {
+                "type": "ServiceProvider",
+                "inputs": {
+                    "parameters": {
+                        "queueName": "ms-la-testing-dev-shipinstruction",
+                        "isSessionsEnabled": false
+                    },
+                    "serviceProviderConfiguration": {
+                        "connectionName": "serviceBus",
+                        "operationId": "receiveQueueMessages",
+                        "serviceProviderId": "/serviceProviders/serviceBus"
+                    }
+                },
+                "splitOn": "@triggerOutputs()?['body']"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {}
+    },
+    "kind": "Stateful"
+}

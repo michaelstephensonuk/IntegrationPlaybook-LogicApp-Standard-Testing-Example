@@ -1,0 +1,12 @@
+{
+    "azureLogicAppsStandard.deploySubpath": ".",
+    "azureLogicAppsStandard.projectLanguage": "JavaScript",
+    "azureLogicAppsStandard.projectRuntime": "~3",
+    "debug.internalConsoleOptions": "neverOpen",
+    //"azureFunctions.suppressProject": true,
+    "files.exclude": {
+        "__azurite*": true,
+        "__blobstorage__": true,
+        "__queuestorage__": true
+    }
+}

@@ -1,0 +1,173 @@
+{
+    "DocumentElement": {
+      "QueryResult": {
+        "origin_code": {
+          "@datatype": "str",
+          "#text": "3100"
+        },
+        "order_no": {
+          "@datatype": "str",
+          "#text": "28300-1"
+        },
+        "plant_id": {
+          "@datatype": "str",
+          "#text": "Acme"
+        },
+        "order_date": {
+          "@datatype": "dateTime",
+          "#text": "20220221T000000"
+        },
+        "sched_ship_date": {
+          "@datatype": "dateTime",
+          "#text": "20220413T000000"
+        },
+        "request_dlv_date": {
+          "@datatype": "dateTime",
+          "#text": "20220422T000000"
+        },
+        "MOT": {
+          "@datatype": "str",
+          "#text": "Rail"
+        },
+        "freight_code": {
+          "@datatype": "str",
+          "#text": "P"
+        },
+        "Incoterms": {
+          "@datatype": "str",
+          "#text": "DDP"
+        },
+        "customer_no": {
+          "@datatype": "str",
+          "#text": "107225"
+        },
+        "shipper_no": {
+          "@datatype": "str"
+        },
+        "origin_city": {
+          "@datatype": "str",
+          "#text": "Chicago"
+        },
+        "origin_state": {
+          "@datatype": "str",
+          "#text": "IL"
+        },
+        "origin_splc": {
+          "@datatype": "str",
+          "#text": "386235"
+        },
+        "dest_city": {
+          "@datatype": "str",
+          "#text": "Chicago"
+        },
+        "dest_state": {
+          "@datatype": "str",
+          "#text": "IL"
+        },
+        "dest_country": {
+          "@datatype": "str",
+          "#text": "United States"
+        },
+        "dest_splc": {
+          "@datatype": "str",
+          "#text": "384869"
+        },
+        "entry_user_id": {
+          "@datatype": "str",
+          "#text": "JB"
+        },
+        "req_no_of_equip": {
+          "@datatype": "int",
+          "#text": "1"
+        },
+        "req_qty": {
+          "@datatype": "dbl",
+          "#text": "195000"
+        },
+        "req_qty_uom": {
+          "@datatype": "str",
+          "#text": "LBS"
+        },
+        "order_type": {
+          "@datatype": "str",
+          "#text": "L"
+        },
+        "sales_rep": {
+          "@datatype": "str",
+          "#text": "Joe Bloggs"
+        },
+        "arc_date": {
+          "@datatype": "dateTime",
+          "#text": "20220412T155058"
+        },
+        "receipt_code": {
+          "@datatype": "str",
+          "#text": "LS"
+        },
+        "receipt_deal": {
+          "@datatype": "str",
+          "#text": "32524-1"
+        },
+        "delivery_code": {
+          "@datatype": "str",
+          "#text": "SD"
+        },
+        "delivery_deal": {
+          "@datatype": "str",
+          "#text": "33138-1"
+        },
+        "comm_code": {
+          "@datatype": "str",
+          "#text": "H1002-P"
+        },
+        "comm_name": {
+          "@datatype": "str",
+          "#text": "H1002-P"
+        },
+        "comm_stcc": {
+          "@datatype": "str",
+          "#text": "2821139"
+        },
+        "lbs_per_gal_60": {
+          "@datatype": "dbl",
+          "#text": "0.54"
+        },
+        "ProductGrade": {
+          "@datatype": "str",
+          "#text": "HPP-P"
+        },
+        "ProductSpec": {
+          "@datatype": "str",
+          "#text": "H1002NA-P"
+        },
+        "Strategy": {
+          "@datatype": "str",
+          "#text": "Market Sales"
+        },
+        "CreditFlag": {
+          "@datatype": "str",
+          "#text": "N"
+        },
+        "OrderPriority": {
+          "@datatype": "str",
+          "#text": "1"
+        },
+        "comm_short_name": {
+          "@datatype": "str",
+          "#text": "Homopolymer Polypropylene - Prime"
+        },
+        "care_of_party": {
+          "@datatype": "str",
+          "#text": "107237"
+        },
+        "comm_group": {
+          "@datatype": "str",
+          "#text": "Petrochemical"
+        },
+        "customer_po_ref": {
+          "@datatype": "str",
+          "#text": "Freight Invoice"
+        }
+      }
+    }
+  }

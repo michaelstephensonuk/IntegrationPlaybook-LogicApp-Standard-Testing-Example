@@ -1,0 +1,59 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Compose": {
+                "type": "Compose",
+                "inputs": "@triggerBody()",
+                "runAfter": {}
+            },
+            "Response": {
+                "type": "Response",
+                "kind": "http",
+                "inputs": {
+                    "statusCode": 200,
+                    "body": "@body('HTTP_-_Dataverse_Who_Am_I')"
+                },
+                "runAfter": {
+                    "HTTP_-_Dataverse_Who_Am_I": [
+                        "Succeeded"
+                    ]
+                }
+            },
+            "HTTP_-_Dataverse_Who_Am_I": {
+                "type": "Http",
+                "inputs": {
+                    "method": "GET",
+                    "uri": "@{parameters('dataverse_audience')}/api/data/v9.0/WhoAmI()",
+                    "headers": {
+                        "Accept": "application/json",
+                        "OData-MaxVersion": "4.0",
+                        "OData-Version": "4.0"
+                    },
+                    "authentication": {
+                        "type": "ActiveDirectoryOAuth",
+                        "tenant": "@parameters('dataverse_tenant_id')",
+                        "audience": "@parameters('dataverse_audience')",
+                        "clientId": "@parameters('dataverse_client_id')",
+                        "secret": "@parameters('dataverse_client_secret')"
+                    }
+                },
+                "runAfter": {
+                    "Compose": [
+                        "Succeeded"
+                    ]
+                }
+            }
+        },
+        "triggers": {
+            "manual": {
+                "type": "Request",
+                "kind": "Http",
+                "inputs": {}
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {}
+    },
+    "kind": "Stateful"
+}

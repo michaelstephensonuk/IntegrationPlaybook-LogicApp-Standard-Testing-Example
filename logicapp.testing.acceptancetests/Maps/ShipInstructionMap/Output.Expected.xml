@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns0:ShipOrder xmlns:ns0="http://IntegrationAccount.Borque_Import_ShipOrder">
+    <BOF>
+        <Text></Text>
+    </BOF>
+    <BOB>
+        <Text></Text>
+    </BOB>
+    <OH>
+        <origin_code>3100</origin_code>
+        <order_no>28300-1</order_no>
+        <plant_id>ACME</plant_id>
+        <order_date>20220221T000000</order_date>
+        <sched_ship_date>20220413T000000</sched_ship_date>
+        <request_dlv_date>20220422T000000</request_dlv_date>
+        <trans_mode_code>Rail</trans_mode_code>
+        <freight_code>P</freight_code>
+        <fob>D</fob>
+        <customer_no>107225</customer_no>
+        <freight_billto_no>United States</freight_billto_no>
+        <shipper_no></shipper_no>
+        <origin_city>Chicago</origin_city>
+        <origin_state>IL</origin_state>
+        <origin_splc>386235</origin_splc>
+        <dest_city>Chicago</dest_city>
+        <dest_state>IL</dest_state>
+        <dest_splc>384869</dest_splc>
+        <entry_user_id>JB</entry_user_id>
+        <req_no_of_equip>1</req_no_of_equip>
+        <req_qty>195000</req_qty>
+        <req_qty_uom>LBS</req_qty_uom>                    
+        <order_type>L</order_type>
+        <sales_rep>Joe Bloggs</sales_rep>
+        <arc_ind>R</arc_ind>
+        <arc_date>20220412T155058</arc_date>
+    </OH>            
+    <_x0033_P>
+        <party_code>C1</party_code>
+        <address_no>107237</address_no>
+        <address_entity_code>RTCF</address_entity_code>
+    </_x0033_P>   
+    <RF>
+        <reference_code>LS</reference_code>
+        <reference_dscr>32524-1</reference_dscr>
+    </RF>
+    <RF>
+        <reference_code>SD</reference_code>
+        <reference_dscr>33138-1</reference_dscr>
+    </RF>     
+    <RF>
+        <reference_code>PO</reference_code>
+        <reference_dscr>Freight Invoice</reference_dscr>
+    </RF>
+    <PD>
+        <compart_no>1</compart_no>
+        <comm_code>H1002NA-P</comm_code>
+        <comm_name>H1002NA-P</comm_name>
+        <comm_stcc>2821139</comm_stcc>
+        <quantity>195000</quantity>        
+        <comm_um>LBS</comm_um>
+        <lbs_per_gal_60>0.54</lbs_per_gal_60>
+        <comm_name2>H1002NA-P</comm_name2>
+        <comm_ref1>HPP-P</comm_ref1>
+        <comm_ref2>Market Sales</comm_ref2>
+        <comm_ref3>N</comm_ref3>
+        <comm_ref4>H1002NA-P</comm_ref4>
+        <quality_code>HPP-P</quality_code>
+    </PD>
+    <EOB>
+        <Text></Text>
+    </EOB>
+    <EOF>
+        <Text></Text>
+    </EOF>
+</ns0:ShipOrder>
