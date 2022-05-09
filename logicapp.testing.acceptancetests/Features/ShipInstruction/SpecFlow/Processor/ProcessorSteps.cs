@@ -7,25 +7,30 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using TechTalk.SpecFlow;
-using LogicApp.Testing.AcceptanceTests.Helpers;
 using System.Xml;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using TechTalk.SpecFlow.Infrastructure;
+using logicapp.testing.acceptancetests.Helpers;
 
-namespace LogicApp.Testing.AcceptanceTests.ShipInstruction.SpecFlow
+namespace logicapp.testing.acceptancetests.ShipInstruction.SpecFlow.Processor
 {
     
     [Binding]
     [Scope(Feature = "Ship Instruction Processor")]
     public class ProcessorSteps
     {
+        private ISpecFlowOutputHelper _specflowHelper;
+
         private readonly ScenarioContext _scenarioContext;
         public CommonTestContext TestContext { get; set; }
 
-        public ProcessorSteps(ScenarioContext scenarioContext, CommonTestContext testContext)
+        public ProcessorSteps(ScenarioContext scenarioContext, CommonTestContext testContext, 
+            ISpecFlowOutputHelper specflowHelper)
         {
             _scenarioContext = scenarioContext;
+            _specflowHelper = specflowHelper;
             TestContext = testContext;
             TestContext.WorkflowName = "ShipInstruction-Processor";
         }
@@ -77,6 +82,9 @@ namespace LogicApp.Testing.AcceptanceTests.ShipInstruction.SpecFlow
         [When(@"I send the message to the logic app")]
         public void WhenISendTheMessageToTheLogicApp()
         {
+            //Add request message example
+            _specflowHelper.WriteLine(TestContext.Request);
+
             var content = new StringContent(TestContext.Request, Encoding.UTF8, "text/xml");
             TestContext.Response = TestContext.LogicAppTestManager.TriggerLogicAppWithPost(content);
         }
@@ -116,34 +124,63 @@ namespace LogicApp.Testing.AcceptanceTests.ShipInstruction.SpecFlow
         [Then(@"the logic app will transform data to the destination format")]
         public void ThenTheLogicAppWillTransformDataToTheDestinationFormat(Table table)
         {
-            var actionStatus = TestContext.LogicAppTestManager.GetActionStatus("Transform JSON To TEXT");
+            var actionName = "Transform JSON To TEXT";
+
+            var actionStatus = TestContext.LogicAppTestManager.GetActionStatus(actionName);
             Assert.AreEqual(ActionStatus.Succeeded, actionStatus);
 
             //I can get the output action from the message and then make assertions on it
-            var actionOutputMessage = TestContext.LogicAppTestManager.GetActionOutputMessage("Transform JSON To TEXT");
-            var actionOutputMessageJson = JObject.Parse(actionOutputMessage);
-            var actionMessage = actionOutputMessageJson["body"].Value<string>();    
-            Assert.IsTrue(actionMessage.Contains("ns0:ShipOrder"));
+            var actionInputMessage = TestContext.LogicAppTestManager.GetActionInputMessage(actionName);
+            var actionInputMessageBody = actionInputMessage.GetMessageContentFromActionJson<JObject>();
 
-            var xdoc = XDocument.Parse(actionMessage);    
+            var actionOutputMessage = TestContext.LogicAppTestManager.GetActionOutputMessage(actionName);                       
+            var actionOutputMessageBody = actionOutputMessage.GetMessageBodyFromActionJson<string>();
+
+            //Make some assertions about the message created from the map
+            Assert.IsTrue(actionOutputMessageBody.Contains("ns0:ShipOrder"));
+
+            var xdoc = XDocument.Parse(actionOutputMessageBody);    
             foreach(var row in table.Rows)
             {
                 var expectedElementName = row[0];
                 Assert.IsTrue(xdoc.Descendants(expectedElementName).Any(), $"The element {expectedElementName} does not exist");
             }
+
+            //Add Input to documentation
+            _specflowHelper.WriteLine("Map Input Message:");
+            _specflowHelper.WriteLine(actionInputMessageBody.ToString().FormatAsJson());
+
+            //Add Output to documentation
+            _specflowHelper.WriteLine("Map Output Message:");
+            _specflowHelper.WriteLine(actionOutputMessageBody.FormatAsXml());
         }
 
         [Then(@"the logic app will convert the message to the flat file format")]
         public void ThenTheLogicAppWillConvertTheMessageToTheFlatFileFormat()
         {
-            var actionStatus = TestContext.LogicAppTestManager.GetActionStatus("Flat File Encoding");
+            var actionName = "Flat File Encoding";
+            var actionStatus = TestContext.LogicAppTestManager.GetActionStatus(actionName);
             Assert.AreEqual(ActionStatus.Succeeded, actionStatus);
 
-            var actionOutputMessage = TestContext.LogicAppTestManager.GetActionOutputMessage("Flat File Encoding");
-            var actionOutputMessageJson = JObject.Parse(actionOutputMessage);
-            var actionMessage = actionOutputMessageJson["body"].Value<string>();
-            Assert.IsTrue(actionMessage.StartsWith("$BOF"));
-            Assert.IsTrue(actionMessage.EndsWith("$EOF\r\n"));
+            //Get the Input and output Messages for the action
+            var actionInputMessage = TestContext.LogicAppTestManager.GetActionInputMessage(actionName);
+            var actionInputMessageBody = actionInputMessage.GetMessageContentFromActionJson<string>();
+
+            var actionOutputMessage = TestContext.LogicAppTestManager.GetActionOutputMessage(actionName);
+            var actionOutputMessageBody = actionOutputMessage.GetMessageBodyFromActionJson<string>();
+
+            //Make some assertions about the message to check it looks valid
+            
+            Assert.IsTrue(actionOutputMessageBody.StartsWith("$BOF"));
+            Assert.IsTrue(actionOutputMessageBody.EndsWith("$EOF\r\n"));
+
+            //Add Input to documentation
+            _specflowHelper.WriteLine("Encoder Input Message:");
+            _specflowHelper.WriteLine(actionInputMessageBody.FormatAsXml());
+
+            //Add Output to documentation
+            _specflowHelper.WriteLine("Encoder Output Message:");
+            _specflowHelper.WriteLine(actionOutputMessageBody);
         }
 
         [Then(@"the logic app will send a reply")]
@@ -165,6 +202,9 @@ namespace LogicApp.Testing.AcceptanceTests.ShipInstruction.SpecFlow
         {            
             var actualResponse = TestContext.Response.HttpResponse.Content.ReadAsStringAsync().Result;
             Assert.IsNotNull(actualResponse);
+
+            //Add response message example from Logic App to the Documentation
+            _specflowHelper.WriteLine(actualResponse);
         }
 
         [Then(@"the logic app will identify the commodity is not Petrochemical")]

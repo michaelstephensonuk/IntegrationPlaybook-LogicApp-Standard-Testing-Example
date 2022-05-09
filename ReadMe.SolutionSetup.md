@@ -18,8 +18,6 @@ md logicapp
 
 2) Use logic app in azure extension to create project. 
 
-TODO: Add Video
-
 
 # Acceptance Test Project
 
@@ -108,6 +106,8 @@ https://docs.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme?view=
 More info on the log analytics:
 https://docs.microsoft.com/en-us/dotnet/api/overview/azure/monitor.query-readme-pre
 
+
+
 ## Service Bus Test
 
 In one of the test cases we are using service bus.  If you want to do this test you would also need these extensions
@@ -172,7 +172,19 @@ Copy all of the C# files in this directory to the TestFramework folder
 https://github.com/Azure/logicapps/tree/master/LogicAppsSampleTestFramework/TestFramework
 
 
+6) Wire Mock
 
+Add wiremock to the solution
+
+```
+dotnet add package WireMock.Net --version 1.4.41
+```
+
+The original file for mock http server is here
+logicapp.testing.unittests\TestFramework\MockHttpHost .md
+
+Ive updated it to this
+logicapp.testing.unittests\TestFramework\MockHttpHost2.cs
 
 
 # Add Test Projects to Solution

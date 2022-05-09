@@ -26,7 +26,7 @@
                     "body": "@outputs('Compose_-_Message_Body')"
                 },
                 "runAfter": {
-                    "Send_Data_-_Log_Start": [
+                    "Compose_-_Message_Body": [
                         "Succeeded"
                     ]
                 }
@@ -45,27 +45,6 @@
                 "runAfter": {},
                 "trackedProperties": {
                     "DeliveryId": "@action().inputs.variables[0].value"
-                }
-            },
-            "Send_Data_-_Log_Start": {
-                "type": "ApiConnection",
-                "inputs": {
-                    "host": {
-                        "connection": {
-                            "referenceName": "azureloganalyticsdatacollector"
-                        }
-                    },
-                    "method": "post",
-                    "body": "{\n\"key1_name\":\"DeliveryId\",\n\"key1_value\":\"@{variables('deliveryId')}\",\n\"logicapp_name\":\"@{workflow()['name']}\",\n\"logicapp_runid\":\"@{workflow()['run']['name']}\"\n}",
-                    "headers": {
-                        "Log-Type": "logicapps"
-                    },
-                    "path": "/api/logs"
-                },
-                "runAfter": {
-                    "Compose_-_Message_Body": [
-                        "Succeeded"
-                    ]
                 }
             }
         },

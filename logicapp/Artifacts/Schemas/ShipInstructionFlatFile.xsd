@@ -1,5 +1,5 @@
 <xs:schema xmlns="http://IntegrationAccount.Borque_Import_ShipOrder" xmlns:b="http://schemas.microsoft.com/BizTalk/2003"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://IntegrationAccount.Borque_Import_ShipOrder">
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://IntegrationAccount.Acme_Import_ShipOrder">
     <xs:annotation>
         <xs:appinfo>
             <schemaEditorExtension:schemaInfo

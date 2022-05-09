@@ -10,13 +10,14 @@ using TestFramework;
 using System.Dynamic;
 using System.Text;
 using LogicApp.Testing.UnitTests.Helpers;
+using System;
 
-namespace LogicApp.Testing.UnitTests.Echo.MsTest
+namespace logicapp.testing.unittests.Workflows.Echo.MsTest
 {
     
     [TestClass]
     public class Tests
-    {
+    {        
         
         [TestMethod, Priority(1), TestCategory("UnitTests")]
         public void Echo_GreenPath()
@@ -33,8 +34,7 @@ namespace LogicApp.Testing.UnitTests.Echo.MsTest
             workflowTestHostBuilder.Workflows.Add(workflowToTestName);
 
             using (var workflowTestHost = workflowTestHostBuilder.LoadAndBuild())
-            {
-                using (var host = new MockHttpHost())
+            {                
                 using (var client = new HttpClient())
                 {
                     var workflowTestHelper = new WorkflowTestHelper(client);
@@ -44,9 +44,10 @@ namespace LogicApp.Testing.UnitTests.Echo.MsTest
 
                     // Run the workflow.
                     var workFlowRequestContent = new StringContent(inputMessage, Encoding.UTF8, "application/json");
+                    
                     var response = client.PostAsync(logicAppCallBackUrl, workFlowRequestContent).Result;
                     Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);                
-
+                    
                     // Check workflow run status.
                     // Note this makes an assumption its the most recent run (need to check on this)
                     workflowTestHelper.AssertMostRecentRunWasSuccessful(workflowToTestName);

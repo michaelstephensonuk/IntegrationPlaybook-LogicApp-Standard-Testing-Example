@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using TestFramework;
 using System.Collections.Generic;
+using System;
 
 namespace LogicApp.Testing.UnitTests.Helpers
 {
@@ -41,8 +42,27 @@ namespace LogicApp.Testing.UnitTests.Helpers
             WorkflowDefinitions = new List<WorkflowTestInput>();
         }
 
+        private void ValidatePath(string relativePath)
+        {
+            var fullPath = Path.GetFullPath(relativePath);
+            if(File.Exists(fullPath))
+            {
+                Console.WriteLine($"The file {fullPath} does exist");
+            }
+            else
+            {
+                Console.WriteLine($"The file {fullPath} does not exist");
+                throw new Exception($"The file {fullPath} does not exist");
+            }
+        }
+        
         public void Load()
         {
+            ValidatePath(ConnectionsPath);
+            ValidatePath(AppSettingsPath);
+            ValidatePath(HostPath);
+            ValidatePath(ParametersPath);
+
             //Read the various files for the logic app
             ConnectionsJson = File.ReadAllText(ConnectionsPath);            
             AppSettingsJson = File.ReadAllText(AppSettingsPath);

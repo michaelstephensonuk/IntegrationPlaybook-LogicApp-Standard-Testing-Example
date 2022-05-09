@@ -11,19 +11,6 @@
     }
   },
   "managedApiConnections": {
-    "azureloganalyticsdatacollector": {
-      "api": {
-        "id": "/subscriptions/[Your_Azure_Subscription_Id]/providers/Microsoft.Web/locations/northeurope/managedApis/azureloganalyticsdatacollector"
-      },
-      "connection": {
-        "id": "/subscriptions/[Your_Azure_Subscription_Id]/resourceGroups/[Your_Azure_Resource_Group]/providers/Microsoft.Web/connections/azureloganalyticsdatacollector"
-      },
-      "connectionRuntimeUrl": "https://3102ee38a87458a6.03.common.logic-northeurope.azure-apihub.net/apim/azureloganalyticsdatacollector/c67548f45a8c4c2096de107f4de2513d/",
-      "authentication": {
-        "type": "Raw",
-        "scheme": "Key",
-        "parameter": "@appsetting('azureloganalyticsdatacollector-connectionKey')"
-      }
-    }
+   
   }
 }

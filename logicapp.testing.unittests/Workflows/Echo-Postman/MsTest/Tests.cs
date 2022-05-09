@@ -11,7 +11,7 @@ using System.Dynamic;
 using System.Text;
 using LogicApp.Testing.UnitTests.Helpers;
 
-namespace LogicApp.Testing.UnitTests.Workflows.Echo_Postman.MsTest
+namespace logicapp.testing.unittests.Workflows.Echo_Postman.MsTest
 {
     
     [TestClass]

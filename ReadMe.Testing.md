@@ -81,3 +81,47 @@ dotnet test --filter TestCategory=SpecflowTests
 ```
 dotnet test --filter Priority=1
 ```
+
+
+# Run Tests with the Test UI
+
+The extension to use is
+
+Name: .NET Core Test Explorer
+Id: formulahendry.dotnet-test-explorer
+Description: Test Explorer for .NET Core (MSTest, xUnit, NUnit)
+Version: 0.7.7
+Publisher: Jun Han
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=formulahendry.dotnet-test-explorer
+
+There is a good walk through here
+https://www.codemag.com/Article/2009101/Interactive-Unit-Testing-with-.NET-Core-and-VS-Code
+
+
+
+# Notes
+
+## Test Run in unit test pipeline
+
+In the pipeline, for the unit tests there were some flaky tests because of how they were running.  This
+was causing problems when the test results were published.
+
+I have chosen to instead split and run the tests directly with a dotnet test command call where
+I can control the settings then upload the results seperately.
+
+The original yaml for running tests with the out of the box task is below.
+
+```
+
+    #What: Run unit tests
+    #Why: These tests will be ran against the functions runtime on the local machine
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Unit Tests'
+      enabled: false
+      inputs:
+        command: 'test'
+        publishTestResults: true
+        testRunTitle: '$(BUILD.DEFINITIONNAME) Unit Tests'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/$(RepoFolder)/logicapp.testing.unittests'
+    
+```

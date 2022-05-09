@@ -15,12 +15,12 @@ namespace LogicApp.Testing.UnitTests.Helpers
         public CommonTestContext()
         {
             ManagementClient = new HttpClient();
-            MockHttpHost = new MockHttpHost();
+            MockHttpHost = new MockHttpHost2();
         }
 
 
         public HttpClient ManagementClient { get; set; }
-        public MockHttpHost MockHttpHost { get; set; }
+        public MockHttpHost2 MockHttpHost { get; set; }
 
         public WorkflowTestHost WorkflowTestHost { get; set; }
 

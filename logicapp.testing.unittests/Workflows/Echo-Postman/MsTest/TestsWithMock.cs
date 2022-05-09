@@ -10,8 +10,10 @@ using TestFramework;
 using System.Dynamic;
 using System.Text;
 using LogicApp.Testing.UnitTests.Helpers;
+using WireMock.RequestBuilders;
+using WireMock.ResponseBuilders;
 
-namespace LogicApp.Testing.UnitTests.Workflows.Echo_Postman.MsTest
+namespace logicapp.testing.unittests.Workflows.Echo_Postman.MsTest
 {
     
     [TestClass]
@@ -26,6 +28,7 @@ namespace LogicApp.Testing.UnitTests.Workflows.Echo_Postman.MsTest
             //Create the mock response we want
             dynamic mockedResponseObject = new ExpandoObject();  
             mockedResponseObject.url = expectedUrl;
+            var mockedResponseMessage = JsonConvert.SerializeObject(mockedResponseObject);
 
             //Create an object for the input to my workflow
             dynamic testInput = new ExpandoObject();            
@@ -41,29 +44,25 @@ namespace LogicApp.Testing.UnitTests.Workflows.Echo_Postman.MsTest
 
             //We will update some of the app settings to inject the mock host
             dynamic appSettings = JsonConvert.DeserializeObject(workflowTestHostBuilder.AppSettingsJson);
-            appSettings.Values.postman_echo_url = TestEnvironment.FlowV2MockTestHostUri;
+            appSettings.Values.postman_echo_url = TestEnvironment.FlowV2MockTestHostUri + "/get";
             workflowTestHostBuilder.AppSettingsJson = JsonConvert.SerializeObject(appSettings);
 
             using (var workflowTestHost = workflowTestHostBuilder.Build())
             {
-                using (var mockHost = new MockHttpHost())
+                using (var mockHost = new MockHttpHost2())
                 using (var client = new HttpClient())
                 {
-                    //Setup Mocked Response
-                    mockHost.RequestHandler = request =>
-                    {
-                        var responseContent = JsonConvert.SerializeObject(mockedResponseObject);
-
-                        var requestUri =  request.RequestUri;
-                        var requestContentText =  request.Content.ReadAsStringAsync().Result;
-                        
-                        var mockedResponse = new HttpResponseMessage(statusCode: HttpStatusCode.OK);                        
-                        mockedResponse.RequestMessage = request;
-                        
-                        mockedResponse.Content = new StringContent(responseContent, encoding: UTF8Encoding.UTF8, mediaType: "application/json");                        
-                        return mockedResponse;
-                    };
-
+                    //Setup the mock server to return responses
+                    mockHost.Server.Given(
+                        Request.Create().WithPath("/get").UsingGet()
+                    )
+                    .RespondWith(
+                        Response.Create()
+                        .WithStatusCode(200)
+                        .WithHeader("Content-Type", "text/plain")
+                        .WithBody(mockedResponseMessage)
+                    );
+                   
                     //Setup Test Helper for running the workflow
                     var workflowTestHelper = new WorkflowTestHelper(client);
 

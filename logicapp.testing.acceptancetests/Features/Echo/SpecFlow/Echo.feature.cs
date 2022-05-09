@@ -27,7 +27,8 @@ namespace logicapp.testing.acceptancetests.Features.Echo.SpecFlow
         
         private Microsoft.VisualStudio.TestTools.UnitTesting.TestContext _testContext;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "DEVOPS_WI:54"};
         
 #line 1 "Echo.feature"
 #line hidden
@@ -48,7 +49,8 @@ namespace logicapp.testing.acceptancetests.Features.Echo.SpecFlow
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Echo/SpecFlow", "Echo Workflow", "\tSimple test of a basic workflow which will echo back a response", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Echo/SpecFlow", "Echo Workflow", "\tSimple test of a basic workflow which will echo back a response", ProgrammingLanguage.CSharp, new string[] {
+                        "DEVOPS_WI:54"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -94,6 +96,7 @@ namespace logicapp.testing.acceptancetests.Features.Echo.SpecFlow
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Echo Specflow Green Path")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Echo Workflow")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("DEVOPS_WI:54")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("CleanTheSystem")]
         public virtual void EchoSpecflowGreenPath()
         {
@@ -101,7 +104,7 @@ namespace logicapp.testing.acceptancetests.Features.Echo.SpecFlow
                     "CleanTheSystem"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Echo Specflow Green Path", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 5
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -130,32 +133,32 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "Surname",
                             "Stephenson"});
-#line 6
+#line 7
  testRunner.Given("I have a request to send to the logic app", ((string)(null)), table1, "Given ");
 #line hidden
-#line 10
+#line 11
  testRunner.And("the logic app test manager is setup", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 11
+#line 12
  testRunner.When("I send the message to the logic app", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
+#line 13
  testRunner.Then("the logic app will start running", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 13
+#line 14
  testRunner.And("the logic app will receive the message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 14
+#line 15
  testRunner.And("the logic app will send a reply", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 15
+#line 16
  testRunner.And("the logic app will complete successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table2.AddRow(new string[] {
                             "Michael Stephenson"});
-#line 16
+#line 17
  testRunner.And("the response from the logic app will be as expected", ((string)(null)), table2, "And ");
 #line hidden
             }

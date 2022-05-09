@@ -1,5 +1,6 @@
 using IPB.LogicApp.Standard.Testing.Model.WorkflowRunActionDetails;
 using IPB.LogicApp.Standard.Testing.Model.WorkflowRunOverview;
+using logicapp.testing.acceptancetests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
@@ -7,10 +8,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using TechTalk.SpecFlow;
-using LogicApp.Testing.AcceptanceTests.Helpers;
 
 
-namespace LogicApp.Testing.AcceptanceTests.Echo.MsTest
+namespace logicapp.testing.acceptancetests.Features.Echo.MsTest
 {
     
     [TestClass]

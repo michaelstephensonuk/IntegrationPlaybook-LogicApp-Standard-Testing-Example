@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace LogicApp.Testing.AcceptanceTests.Helpers
+namespace logicapp.testing.acceptancetests.Helpers
 {
     public class ConfigHelper
     {

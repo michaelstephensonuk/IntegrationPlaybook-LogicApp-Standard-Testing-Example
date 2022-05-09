@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using TechTalk.SpecFlow;
-using LogicApp.Testing.AcceptanceTests.Helpers;
 using System.IO;
+using logicapp.testing.acceptancetests.Helpers;
 
-namespace LogicApp.Testing.AcceptanceTests.Maps.ShipInstructionMap
+namespace logicapp.testing.acceptancetests.Maps.ShipInstructionMap
 {
     
     [TestClass]
@@ -39,7 +39,8 @@ namespace LogicApp.Testing.AcceptanceTests.Maps.ShipInstructionMap
 
             //And the response from the logic app will be as expected            
             var actualResponse = response.HttpResponse.Content.ReadAsStringAsync().Result;
-            Assert.AreEqual(expectedContent, actualResponse);
+            var compareResult = XmlCompareHelper.CompareXmlStringsWithXDoc(expectedContent, actualResponse);
+            Assert.IsTrue(compareResult, "The result from the map is not as expected");            
         }
     }
 }

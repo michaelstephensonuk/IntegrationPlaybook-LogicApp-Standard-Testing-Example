@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace logicapp.testing.acceptancetests.Features.ShipInstruction.SpecFlow
+namespace logicapp.testing.acceptancetests.Features.ShipInstruction.SpecFlow.Receiver
 {
     using TechTalk.SpecFlow;
     using System;
@@ -48,8 +48,13 @@ namespace logicapp.testing.acceptancetests.Features.ShipInstruction.SpecFlow
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/ShipInstruction/SpecFlow", "Ship Instruction Service Bus Receiver", "\tAs a transport manager\r\n    So that I can asssociate railcars to orders\r\n    I w" +
-                    "ant the transport system to be notified when an order is ready to be dispatched", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/ShipInstruction/SpecFlow/Receiver", "Ship Instruction Service Bus Receiver", @"	As a transport manager
+    So that I can asssociate railcars to orders
+    I want the transport system to be notified when an order is ready to be dispatched
+
+This feature is for the processing of events from Service Bus.  We will pick up a message
+and then pass it onto the process logic workflow which will implement the logic for processing
+this message type", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -66,7 +71,7 @@ namespace logicapp.testing.acceptancetests.Features.ShipInstruction.SpecFlow
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "Ship Instruction Service Bus Receiver")))
             {
-                global::logicapp.testing.acceptancetests.Features.ShipInstruction.SpecFlow.ShipInstructionServiceBusReceiverFeature.FeatureSetup(null);
+                global::logicapp.testing.acceptancetests.Features.ShipInstruction.SpecFlow.Receiver.ShipInstructionServiceBusReceiverFeature.FeatureSetup(null);
             }
         }
         
@@ -102,7 +107,7 @@ namespace logicapp.testing.acceptancetests.Features.ShipInstruction.SpecFlow
                     "CleanTheSystem"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Ship Instruction Receiver Green Path", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 7
+#line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -143,34 +148,34 @@ this.ScenarioInitialize(scenarioInfo);
                 table6.AddRow(new string[] {
                             "BillOfLading",
                             ""});
-#line 8
+#line 12
  testRunner.Given("I have a request to dispatch an order", ((string)(null)), table6, "Given ");
 #line hidden
-#line 16
+#line 20
  testRunner.And("the logic app test manager is setup", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 17
+#line 21
  testRunner.When("I send the message to the service bus", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 18
+#line 22
  testRunner.And("I wait a short period to let the logic app complete", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 19
+#line 23
  testRunner.Then("we will check for the most recent logic app run", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 20
+#line 24
  testRunner.And("the logic app will start running", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 21
+#line 25
  testRunner.And("the logic app will receive the message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 22
+#line 26
  testRunner.And("the logic app will track the delivery id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 23
+#line 27
  testRunner.And("the logic app will call the child processor workflow", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 24
+#line 28
  testRunner.And("the logic app will complete successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }

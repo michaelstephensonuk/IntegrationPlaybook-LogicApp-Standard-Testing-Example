@@ -24,7 +24,7 @@
                 "type": "Http",
                 "inputs": {
                     "method": "GET",
-                    "uri": "@{parameters('dataverse_audience')}/api/data/v9.0/WhoAmI()",
+                    "uri": "@{parameters('dataverse_url')}/api/data/v9.0/WhoAmI()",
                     "headers": {
                         "Accept": "application/json",
                         "OData-MaxVersion": "4.0",

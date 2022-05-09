@@ -3,6 +3,10 @@ Feature: Ship Instruction Service Bus Receiver
     So that I can asssociate railcars to orders
     I want the transport system to be notified when an order is ready to be dispatched
 
+This feature is for the processing of events from Service Bus.  We will pick up a message
+and then pass it onto the process logic workflow which will implement the logic for processing
+this message type
+
 @CleanTheSystem
 Scenario: Ship Instruction Receiver Green Path
 	Given I have a request to dispatch an order

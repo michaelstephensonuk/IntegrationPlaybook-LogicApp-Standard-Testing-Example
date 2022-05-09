@@ -1,5 +1,6 @@
 
 cd ..\logicapp
+cd .\logicapp
 
 # global.json
 This is added as per link below to add some info about the sdk to use

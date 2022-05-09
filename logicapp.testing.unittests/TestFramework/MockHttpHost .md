@@ -1,9 +1,12 @@
+Note this is the original sample from Microsoft but it needs to be updated to run in .net 6 so I have changed it to use WireMock.net instead
+
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace TestFramework
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Formatting;
@@ -83,11 +86,12 @@ namespace TestFramework
             /// <param name="services">The services.</param>
             public void ConfigureServices(IServiceCollection services)
             {
+                
                 services
-                    //.Configure<IISServerOptions>(options =>
-                    //{
-                    //    options.AllowSynchronousIO = true;
-                    //})
+                    .Configure<IISServerOptions>(options =>
+                    {
+                        //options.AllowSynchronousIO = true;
+                    })
                     .AddResponseCompression(options =>
                     {
                         options.EnableForHttps = true;
@@ -96,10 +100,8 @@ namespace TestFramework
                     .AddMvc(options =>
                     {
                         options.EnableEndpointRouting = true;
-                    });
-                    
-                    //TODO: Check what this is used for
-                    //.SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                    })
+                    .SetCompatibilityVersion(CompatibilityVersion.Latest);
             }
 
             /// <summary>
@@ -154,7 +156,14 @@ namespace TestFramework
                                 response.Headers.Append(header.Key, header.Value.ToArray());
                             }
 
-                            await responseMessage.Content.CopyToAsync(response.Body).ConfigureAwait(false);
+                            //await responseMessage.Content.CopyToAsync(response.Body).ConfigureAwait(false);
+                            var ms = new MemoryStream();
+                            await responseMessage.Content.CopyToAsync(ms).ConfigureAwait(false);
+                            ms.Seek(0, SeekOrigin.Begin);
+
+                            response.Body = ms;
+                            //responseMessage.Content.CopyToAsync(response.Body).ConfigureAwait(false);
+
                         }
                     }
                 });

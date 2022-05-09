@@ -20,23 +20,6 @@
                     ]
                 },
                 "actions": {
-                    "Send_Data_-_Log_Start": {
-                        "type": "ApiConnection",
-                        "inputs": {
-                            "host": {
-                                "connection": {
-                                    "referenceName": "azureloganalyticsdatacollector"
-                                }
-                            },
-                            "method": "post",
-                            "body": "{\n\"key1_name\":\"DeliveryId\",\n\"key1_value\":\"@{body('Parse_JSON_-_Ship_Event')?['DeliveryNotify']?['Delivery']?['DeliveryId']}\",\n\"logicapp_name\":\"@{workflow()['name']}\",\n\"logicapp_runid\":\"@{workflow()['run']['name']}\"\n}",
-                            "headers": {
-                                "Log-Type": "logicapps"
-                            },
-                            "path": "/api/logs"
-                        },
-                        "runAfter": {}
-                    },
                     "HTTP_-_Lookup_Data": {
                         "type": "Http",
                         "inputs": {
@@ -49,11 +32,7 @@
                                 "shipid": "@body('Parse_JSON_-_Ship_Event')?['DeliveryNotify']?['Delivery']?['DeliveryId']"
                             }
                         },
-                        "runAfter": {
-                            "Send_Data_-_Log_Start": [
-                                "Succeeded"
-                            ]
-                        }
+                        "runAfter": {}
                     },
                     "Compose_-_Convert_to_Json": {
                         "type": "Compose",

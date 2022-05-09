@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ns0:ShipOrder xmlns:ns0="http://IntegrationAccount.Borque_Import_ShipOrder">
+<ns0:ShipOrder xmlns:ns0="http://IntegrationAccount.Acme_Import_ShipOrder">
     <BOF>
         <Text></Text>
     </BOF>

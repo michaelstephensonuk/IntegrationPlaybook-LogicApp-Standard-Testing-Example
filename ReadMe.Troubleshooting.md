@@ -93,3 +93,20 @@ File = host.json
 }
 
 ```
+
+
+##
+
+.vscode\tasks.json
+
+
+
+# Storage Issue
+
+In early may there was an issue with azurite which was causing 412 http errors.  Until this is resolved i have changed to use a storage account in azure.  This is simply a change of the setting in the local.settings.json
+
+logicapp\local.settings.json
+
+```
+"AzureWebJobsStorage": "UseDevelopmentStorage=true",
+```

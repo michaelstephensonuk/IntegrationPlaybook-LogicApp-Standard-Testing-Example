@@ -71,7 +71,8 @@ namespace TestFramework
 
                 // This allows us to pass the message through APIs defined in legacy code and then
                 // operate on the HttpContext inside.
-                message.Properties[nameof(HttpContext)] = httpContext;
+                //message.Properties[nameof(HttpContext)] = httpContext;
+                message.Options.Set(new HttpRequestOptionsKey<HttpContext>(nameof(HttpContext)), httpContext);
 
                 message.Content = new StreamContent(httpRequest.Body);
 

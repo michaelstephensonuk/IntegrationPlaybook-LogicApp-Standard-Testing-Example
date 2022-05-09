@@ -1,10 +1,15 @@
 
 
+# Useful Commands Cheatsheet
+
+```
 cd logicapp.testing.acceptancetests
 cd ..\logicapp.testing.acceptancetests
+```
 
 ## Run tests to see logs
 ```
+dotnet test --logger:"console;verbosity=normal"
 dotnet test --logger:"console;verbosity=detailed"
 ```
 

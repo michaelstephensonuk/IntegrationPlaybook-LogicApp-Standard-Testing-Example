@@ -1,3 +1,4 @@
+@DEVOPS_WI:53
 Feature: Dataverse Who Am I
 	Simple test of a basic workflow which will connect to Dataverse
 

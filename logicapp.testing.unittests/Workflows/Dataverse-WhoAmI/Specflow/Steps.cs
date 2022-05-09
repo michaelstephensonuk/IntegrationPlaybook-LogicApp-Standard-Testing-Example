@@ -12,7 +12,7 @@ using System.Text;
 using LogicApp.Testing.UnitTests.Helpers;
 using TechTalk.SpecFlow;
 
-namespace LogicApp.Testing.UnitTests.Workflows.Test_Stateful_HelloWorld.Specflow
+namespace logicapp.testing.unittests.Workflows.Test_Stateful_HelloWorld.Specflow
 {
     
     [Binding]

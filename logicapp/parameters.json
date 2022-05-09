@@ -3,6 +3,10 @@
     "type": "String",
     "value": "@appsetting('dataverse_audience')"
   },
+  "dataverse_url": {
+    "type": "String",
+    "value": "@appsetting('dataverse_url')"
+  },
   "dataverse_client_id": {
     "type": "String",
     "value": "@appsetting('dataverse_client_id')"

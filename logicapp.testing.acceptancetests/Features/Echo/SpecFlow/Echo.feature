@@ -1,3 +1,4 @@
+@DEVOPS_WI:54
 Feature: Echo Workflow
 	Simple test of a basic workflow which will echo back a response
 

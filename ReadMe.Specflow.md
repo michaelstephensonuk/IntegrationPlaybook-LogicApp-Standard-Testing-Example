@@ -43,3 +43,11 @@ https://medium.com/@uppadhyayraj/specflow-integration-in-vs-code-single-ide-acro
 https://marketplace.visualstudio.com/items?itemName=techtalk.techtalk-specflow-plus
 
 https://docs.specflow.org/projects/specflow/en/latest/Execution/Executing-Specific-Scenarios.html
+
+5) Specflow and Living Doc in DevOps
+
+https://docs.specflow.org/projects/specflow-livingdoc/en/latest/sbsguides/sbsazdo.html
+https://docs.specflow.org/projects/specflow-livingdoc/en/latest/Generating/Configuring-the-Build-Step-in-DevOps.html
+
+Good video with more info:
+https://www.youtube.com/watch?v=0prYeByOw5A

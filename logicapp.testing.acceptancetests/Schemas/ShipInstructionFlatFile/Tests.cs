@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using TechTalk.SpecFlow;
-using LogicApp.Testing.AcceptanceTests.Helpers;
 using System.IO;
+using logicapp.testing.acceptancetests.Helpers;
 
-namespace LogicApp.Testing.AcceptanceTests.Schemas.ShipInstructionFlatFile
+namespace logicapp.testing.acceptancetests.Schemas.ShipInstructionFlatFile
 {
     
     [TestClass]

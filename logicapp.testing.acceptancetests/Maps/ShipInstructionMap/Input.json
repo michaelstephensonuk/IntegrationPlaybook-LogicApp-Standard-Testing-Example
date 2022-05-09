@@ -7,7 +7,7 @@
         },
         "order_no": {
           "@datatype": "str",
-          "#text": "28300-1"
+          "#text": "12345-1"
         },
         "plant_id": {
           "@datatype": "str",
@@ -39,7 +39,7 @@
         },
         "customer_no": {
           "@datatype": "str",
-          "#text": "107225"
+          "#text": "12345"
         },
         "shipper_no": {
           "@datatype": "str"
@@ -106,7 +106,7 @@
         },
         "receipt_deal": {
           "@datatype": "str",
-          "#text": "32524-1"
+          "#text": "107237"
         },
         "delivery_code": {
           "@datatype": "str",
@@ -114,15 +114,15 @@
         },
         "delivery_deal": {
           "@datatype": "str",
-          "#text": "33138-1"
+          "#text": "99999"
         },
         "comm_code": {
           "@datatype": "str",
-          "#text": "H1002-P"
+          "#text": "ABCDC-P"
         },
         "comm_name": {
           "@datatype": "str",
-          "#text": "H1002-P"
+          "#text": "ABCDC-P"
         },
         "comm_stcc": {
           "@datatype": "str",
@@ -134,15 +134,15 @@
         },
         "ProductGrade": {
           "@datatype": "str",
-          "#text": "HPP-P"
+          "#text": "ABC-P"
         },
         "ProductSpec": {
           "@datatype": "str",
-          "#text": "H1002NA-P"
+          "#text": "ABCDC-P"
         },
         "Strategy": {
           "@datatype": "str",
-          "#text": "Market Sales"
+          "#text": "Sales"
         },
         "CreditFlag": {
           "@datatype": "str",
@@ -154,11 +154,11 @@
         },
         "comm_short_name": {
           "@datatype": "str",
-          "#text": "Homopolymer Polypropylene - Prime"
+          "#text": "Test - Prime"
         },
         "care_of_party": {
           "@datatype": "str",
-          "#text": "107237"
+          "#text": "12345"
         },
         "comm_group": {
           "@datatype": "str",
