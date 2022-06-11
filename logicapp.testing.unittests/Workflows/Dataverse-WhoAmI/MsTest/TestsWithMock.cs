@@ -47,50 +47,50 @@ namespace logicapp.testing.unittests.Workflows.Dataverse_WhoAmI.MsTest
             appSettings.Values.dataverse_url = TestEnvironment.FlowV2MockTestHostUri;
             workflowTestHostBuilder.AppSettingsJson = JsonConvert.SerializeObject(appSettings);
 
+            using (var mockHost = new MockHttpHost2(port: 7075))
+            using (var client = new HttpClient())
             using (var workflowTestHost = workflowTestHostBuilder.Build())
             {                
-                using (var mockHost = new MockHttpHost2())
-                using (var client = new HttpClient())
-                {           
-                    //Setup the mock server to return responses
-                    mockHost.Server.Given(
-                        Request.Create().WithPath("/api/data/v9.0/WhoAmI()")
-                        .UsingGet()                                                
-                    )
-                    .RespondWith(
-                        Response.Create()
-                        .WithStatusCode(200)
-                        .WithHeader("Content-Type", "application/json")
-                        .WithBody(mockedResponseMessage)
-                    );
-
-                    //Setup Test Helper for running the workflow
-                    var workflowTestHelper = new WorkflowTestHelper(client);
-
-                    // Get workflow callback URL.                    
-                    var logicAppCallBackUrl = workflowTestHelper.GetCallBackUrl(workflowToTestName);
-
-                    // Run the workflow.
-                    var workFlowRequestContent = new StringContent(inputMessage, Encoding.UTF8, "application/json");
-                    var response = client.PostAsync(logicAppCallBackUrl, workFlowRequestContent).Result;
-                    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);                
-
-                    // Check workflow run status.
-                    // Note this makes an assumption its the most recent run (need to check on this)
-                    workflowTestHelper.AssertMostRecentRunWasSuccessful(workflowToTestName);
-
-                    //Get the run id for the run
-                    var runId = workflowTestHelper.GetMostRecentRunId(workflowToTestName);
                     
-                    //Check Actions run
-                    workflowTestHelper.AssertActionSucceeded(workflowToTestName, runId, "Compose");    
-                    workflowTestHelper.AssertActionSucceeded(workflowToTestName, runId, "HTTP_-_Dataverse_Who_Am_I");    
-                    workflowTestHelper.AssertActionSucceeded(workflowToTestName, runId, "Response");  
-                        
-                    var responseText = response!.Content!.ReadAsStringAsync()!.Result;
-                    dynamic logicAppResponse = JsonConvert.DeserializeObject(responseText);
-                    Assert.IsNotNull(logicAppResponse!.UserId, "The response did not contain a user id");
-                }
+                //Setup the mock server to return responses
+                mockHost.Server.Given(
+                    Request.Create().WithPath("/api/data/v9.0/WhoAmI()")
+                    .UsingGet()                                                
+                )
+                .RespondWith(
+                    Response.Create()
+                    .WithStatusCode(200)
+                    .WithHeader("Content-Type", "application/json")
+                    .WithBody(mockedResponseMessage)
+                );
+
+                //Setup Test Helper for running the workflow
+                var workflowTestHelper = new WorkflowTestHelper(client);
+
+                // Get workflow callback URL.                    
+                var logicAppCallBackUrl = workflowTestHelper.GetCallBackUrl(workflowToTestName);
+
+                // Run the workflow.
+                var workFlowRequestContent = new StringContent(inputMessage, Encoding.UTF8, "application/json");
+                var response = client.PostAsync(logicAppCallBackUrl, workFlowRequestContent).Result;
+                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);                
+
+                // Check workflow run status.
+                // Note this makes an assumption its the most recent run (need to check on this)
+                workflowTestHelper.AssertMostRecentRunWasSuccessful(workflowToTestName);
+
+                //Get the run id for the run
+                var runId = workflowTestHelper.GetMostRecentRunId(workflowToTestName);
+                
+                //Check Actions run
+                workflowTestHelper.AssertActionSucceeded(workflowToTestName, runId, "Compose");    
+                workflowTestHelper.AssertActionSucceeded(workflowToTestName, runId, "HTTP_-_Dataverse_Who_Am_I");    
+                workflowTestHelper.AssertActionSucceeded(workflowToTestName, runId, "Response");  
+                    
+                var responseText = response!.Content!.ReadAsStringAsync()!.Result;
+                dynamic logicAppResponse = JsonConvert.DeserializeObject(responseText);
+                Assert.IsNotNull(logicAppResponse!.UserId, "The response did not contain a user id");
+            
             }
         }
     }

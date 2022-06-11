@@ -8,6 +8,7 @@ Feature: Ship Instruction Processor
 <a href="https://tfscsc.visualstudio.com/_git/IntegrationPlaybook?path=/vs-code-logicapp-testing/Documentation.ShipInstruction.md">Click here for more info</a>
 
 
+@DEVOPS_WI:56
 @CleanTheSystem
 Scenario: Ship Instruction Processor Green Path
 
@@ -38,6 +39,7 @@ and transform it to the destination flat file format and deliver it to the trans
 	And the logic app will complete successfully
 	And the response from the logic app will be as expected		
 
+@DEVOPS_WI:57
 @CleanTheSystem
 Scenario: Ship Instruction Processor Not PetroChemical Event
 

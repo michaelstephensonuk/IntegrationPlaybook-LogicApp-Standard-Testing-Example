@@ -30,10 +30,19 @@ namespace logicapp.testing.unittests.Workflows.Test_Stateful_HelloWorld.Specflow
         [AfterScenario]        
         public void AfterScenario()
         {
-            if (TestContext != null && TestContext.MockHttpHost != null)
+            if (TestContext != null)
             {
-                TestContext.MockHttpHost.Dispose();
+                if(TestContext.MockHttpHost != null)
+                {
+                    TestContext.MockHttpHost.Dispose();
+                }
+
+                if(TestContext.WorkflowTestHost != null)
+                {
+                    TestContext.WorkflowTestHost.Dispose();
+                }
             }
+            
         }
 
         [Given(@"I have a request to send to the logic app")]
