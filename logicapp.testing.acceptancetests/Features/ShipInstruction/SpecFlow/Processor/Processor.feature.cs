@@ -53,6 +53,10 @@ namespace logicapp.testing.acceptancetests.Features.ShipInstruction.SpecFlow.Pro
     So that I can asssociate railcars to orders
     I want the transport system to be notified when an order is ready to be dispatched
 
+This feature is about processing a ship instruction event which is processed and looks up data
+from the source system and it will then be transformed to the target system format where a flat file
+message is sent to the destination transport management system.
+
 <a href=""https://tfscsc.visualstudio.com/_git/IntegrationPlaybook?path=/vs-code-logicapp-testing/Documentation.ShipInstruction.md"">Click here for more info</a>", ProgrammingLanguage.CSharp, new string[] {
                         "DEVOPS_WI:55"});
             testRunner.OnFeatureStart(featureInfo);
@@ -101,16 +105,18 @@ namespace logicapp.testing.acceptancetests.Features.ShipInstruction.SpecFlow.Pro
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Ship Instruction Processor Green Path")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Ship Instruction Processor")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("DEVOPS_WI:55")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("DEVOPS_WI:56")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("CleanTheSystem")]
         public virtual void ShipInstructionProcessorGreenPath()
         {
             string[] tagsOfScenario = new string[] {
+                    "DEVOPS_WI:56",
                     "CleanTheSystem"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Ship Instruction Processor Green Path", "This is the default use case where we get a valid event and then lookup data from" +
                     " the energy system\r\nand transform it to the destination flat file format and del" +
                     "iver it to the transport system.", tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 12
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -151,25 +157,25 @@ this.ScenarioInitialize(scenarioInfo);
                 table3.AddRow(new string[] {
                             "BillOfLading",
                             ""});
-#line 17
+#line 22
  testRunner.Given("I have a request to dispatch an order", ((string)(null)), table3, "Given ");
 #line hidden
-#line 25
+#line 30
  testRunner.And("the logic app test manager is setup", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 26
+#line 31
     testRunner.When("I send the message to the logic app", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 27
+#line 32
  testRunner.Then("the logic app will start running", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 28
+#line 33
  testRunner.And("the logic app will receive the message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 29
+#line 34
  testRunner.And("the logic app will parse the request message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 30
+#line 35
     testRunner.And("the logic app will lookup data from the source system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -180,19 +186,19 @@ this.ScenarioInitialize(scenarioInfo);
                             "plant_id"});
                 table4.AddRow(new string[] {
                             "customer_no"});
-#line 31
+#line 36
     testRunner.And("the logic app will transform data to the destination format", ((string)(null)), table4, "And ");
 #line hidden
-#line 36
+#line 41
     testRunner.And("the logic app will convert the message to the flat file format", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 42
  testRunner.And("the logic app will send a reply", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 38
+#line 43
  testRunner.And("the logic app will complete successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 39
+#line 44
  testRunner.And("the response from the logic app will be as expected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
@@ -203,15 +209,17 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Ship Instruction Processor Not PetroChemical Event")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Ship Instruction Processor")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("DEVOPS_WI:55")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("DEVOPS_WI:57")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("CleanTheSystem")]
         public virtual void ShipInstructionProcessorNotPetroChemicalEvent()
         {
             string[] tagsOfScenario = new string[] {
+                    "DEVOPS_WI:57",
                     "CleanTheSystem"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Ship Instruction Processor Not PetroChemical Event", "This is the case where the event is not related to the PetroChemical commodity so" +
                     " we will ignore the\r\nevent and not process it to other systems", tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 42
+#line 48
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -252,28 +260,28 @@ this.ScenarioInitialize(scenarioInfo);
                 table5.AddRow(new string[] {
                             "BillOfLading",
                             ""});
-#line 47
+#line 53
  testRunner.Given("I have a request to dispatch an order", ((string)(null)), table5, "Given ");
 #line hidden
-#line 55
+#line 61
  testRunner.And("the logic app test manager is setup", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 56
+#line 62
     testRunner.When("I send the message to the logic app", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 57
+#line 63
  testRunner.Then("the logic app will start running", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 58
+#line 64
  testRunner.And("the logic app will receive the message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 59
+#line 65
  testRunner.And("the logic app will parse the request message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 60
+#line 66
  testRunner.And("the logic app will identify the commodity is not Petrochemical", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 61
+#line 67
  testRunner.And("the logic app will terminate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }

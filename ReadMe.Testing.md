@@ -11,7 +11,14 @@ or
 Run in the acceptance test or unit test sub directory to focus on specific test projects
 
 ```
-dotnet test
+dotnet test --logger:"console;verbosity=normal"
+
+```
+
+To get max info on the test
+
+```
+dotnet test --logger:"console;verbosity=detailed"
 ```
 
 ## Turn off Debugging for Tests

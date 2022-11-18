@@ -6,13 +6,14 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
-using TestFramework;
 using System.Dynamic;
 using System.Text;
 using LogicApp.Testing.UnitTests.Helpers;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using IPB.LogicApp.Standard.Testing.Local;
+using IPB.LogicApp.Standard.Testing.Local.Host;
 
 namespace logicapp.testing.unittests
 {    
@@ -47,7 +48,7 @@ namespace logicapp.testing.unittests
         [TestMethod]
         public void FuncFileExists()
         {
-            var expectedPath = TestFramework.WorkflowTestHost.GetFuncPath();
+            var expectedPath = FuncHelper.GetFuncPath();
             var exists = File.Exists(expectedPath);
             Assert.IsTrue(exists);
         }
@@ -62,7 +63,7 @@ namespace logicapp.testing.unittests
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = TestFramework.WorkflowTestHost.GetFuncPath(),
+                        FileName = FuncHelper.GetFuncPath(),
                         Arguments = "start --verbose",
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,

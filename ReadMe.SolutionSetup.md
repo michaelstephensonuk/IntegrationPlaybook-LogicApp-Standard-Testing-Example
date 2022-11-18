@@ -158,33 +158,11 @@ dotnet add package "Specflow.MsTest"
 dotnet add package "SpecFlow.Plus.LivingDocPlugin"
 ```
 
-4) Add a Test Framework folder to the project
-This is where we will add the classes to the project from the microsoft test framework.
+4) Add the logic app test framework nuget
 
 ```
-md TestFramework
+dotnet add package IPB.LogicApp.Standard.Testing.Local 
 ```
-
-5) Copy Microsoft Logic App Test Framework Files to the TestFramework folder
-
-Copy all of the C# files in this directory to the TestFramework folder
-
-https://github.com/Azure/logicapps/tree/master/LogicAppsSampleTestFramework/TestFramework
-
-
-6) Wire Mock
-
-Add wiremock to the solution
-
-```
-dotnet add package WireMock.Net --version 1.4.41
-```
-
-The original file for mock http server is here
-logicapp.testing.unittests\TestFramework\MockHttpHost .md
-
-Ive updated it to this
-logicapp.testing.unittests\TestFramework\MockHttpHost2.cs
 
 
 # Add Test Projects to Solution

@@ -6,10 +6,13 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
-using TestFramework;
 using System.Dynamic;
 using System.Text;
 using LogicApp.Testing.UnitTests.Helpers;
+using IPB.LogicApp.Standard.Testing.Local;
+using IPB.LogicApp.Standard.Testing.Local.Host;
+using IPB.LogicApp.Standard.Testing.Model.WorkflowRunActionDetails;
+using IPB.LogicApp.Standard.Testing.Model.WorkflowRunOverview;
 
 namespace logicapp.testing.unittests.Workflows.Echo_Postman.MsTest
 {
@@ -33,42 +36,45 @@ namespace logicapp.testing.unittests.Workflows.Echo_Postman.MsTest
             var workflowTestHostBuilder = new WorkflowTestHostBuilder();
             workflowTestHostBuilder.Workflows.Add(workflowToTestName);
             
-            //We will load and build the workflow test host in 2 seperate steps so we can inject the mock response if we want
-            workflowTestHostBuilder.Load();
-
-            using (var workflowTestHost = workflowTestHostBuilder.Build())
-            {                
-                using (var client = new HttpClient())
+            //Spin up the workflow host wrapper to run the workflows locally
+            using (var workflowTestHost = workflowTestHostBuilder.LoadAndBuild())
+            {
+                //Create the test manager to act as the client for testing the logic app
+                var logicAppTestManager = new LogicAppTestManager(new LogicAppTestManagerArgs
                 {
-                    //Note: There is no mock used here, we will just let the logic app ping postman as usual
+                    WorkflowName = workflowToTestName
+                });
+                logicAppTestManager.Setup();
 
-                    //Setup Test Helper for running the workflow
-                    var workflowTestHelper = new WorkflowTestHelper(client);
+                //Trigger the workflow
+                var content = new StringContent("{}", Encoding.UTF8, "application/json");
+                var response = logicAppTestManager.TriggerLogicAppWithPost(content);
 
-                    // Get workflow callback URL.                    
-                    var logicAppCallBackUrl = workflowTestHelper.GetCallBackUrl(workflowToTestName);
+                //Check you have a run id
+                Assert.IsNotNull(response.WorkFlowRunId);
 
-                    // Run the workflow.
-                    var workFlowRequestContent = new StringContent(inputMessage, Encoding.UTF8, "application/json");
-                    var response = client.PostAsync(logicAppCallBackUrl, workFlowRequestContent).Result;
-                    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);                
+                //If the workflow started running we can load the run history at this point to start checking it later
+                logicAppTestManager.LoadWorkflowRunHistory();
 
-                    // Check workflow run status.
-                    // Note this makes an assumption its the most recent run (need to check on this)
-                    workflowTestHelper.AssertMostRecentRunWasSuccessful(workflowToTestName);
+                //We can check the trigger status was successful
+                var triggerStatus = logicAppTestManager.GetTriggerStatus();
+                Assert.AreEqual(triggerStatus, TriggerStatus.Succeeded);
 
-                    //Get the run id for the run
-                    var runId = workflowTestHelper.GetMostRecentRunId(workflowToTestName);
-                    
-                    //Check Actions run
-                    workflowTestHelper.AssertActionSucceeded(workflowToTestName, runId, "HTTP_-_Postman_Echo");    
-                    workflowTestHelper.AssertActionSucceeded(workflowToTestName, runId, "Response");  
-                        
-                    //Assert the response
-                    var responseText = response!.Content!.ReadAsStringAsync()!.Result;
-                    var logicAppResponse = JToken.Parse(responseText);
-                    Assert.AreEqual(expectedUrl, logicAppResponse["url"], "The url value is not as expected");
-                }
+                //Check the response action worked
+                var actionStatus = logicAppTestManager.GetActionStatus("HTTP_-_Postman_Echo");
+                Assert.AreEqual(actionStatus, ActionStatus.Succeeded);
+
+                actionStatus = logicAppTestManager.GetActionStatus("Response");
+                Assert.AreEqual(actionStatus, ActionStatus.Succeeded);
+
+                //Check the run status completed successfully
+                var workflowRunStatus = logicAppTestManager.GetWorkflowRunStatus();
+                Assert.AreEqual(WorkflowRunStatus.Succeeded, workflowRunStatus);
+
+                //Assert the response
+                var responseText = response.HttpResponse.Content.ReadAsStringAsync()!.Result;
+                var logicAppResponse = JToken.Parse(responseText);
+                Assert.AreEqual(expectedUrl, logicAppResponse["url"], "The url value is not as expected");
             }
         }
     }

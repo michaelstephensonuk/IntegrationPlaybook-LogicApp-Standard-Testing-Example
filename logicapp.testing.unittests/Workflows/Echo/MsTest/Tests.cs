@@ -6,11 +6,14 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
-using TestFramework;
 using System.Dynamic;
 using System.Text;
 using LogicApp.Testing.UnitTests.Helpers;
 using System;
+using IPB.LogicApp.Standard.Testing.Local;
+using IPB.LogicApp.Standard.Testing.Local.Host;
+using IPB.LogicApp.Standard.Testing.Model.WorkflowRunActionDetails;
+using IPB.LogicApp.Standard.Testing.Model.WorkflowRunOverview;
 
 namespace logicapp.testing.unittests.Workflows.Echo.MsTest
 {
@@ -28,36 +31,42 @@ namespace logicapp.testing.unittests.Workflows.Echo.MsTest
             testInput.Surname = "Stephenson";
             var inputMessage = JsonConvert.SerializeObject(testInput);
 
-            //Setup the workflow test host
+            //Setup the workflow test host                        
             var workflowToTestName = "Echo";
             var workflowTestHostBuilder = new WorkflowTestHostBuilder();
             workflowTestHostBuilder.Workflows.Add(workflowToTestName);
-
+            
+            //Spin up the workflow host wrapper to run the workflows locally
             using (var workflowTestHost = workflowTestHostBuilder.LoadAndBuild())
-            {                
-                using (var client = new HttpClient())
+            {
+                //Create the test manager to act as the client for testing the logic app
+                var logicAppTestManager = new LogicAppTestManager(new LogicAppTestManagerArgs
                 {
-                    var workflowTestHelper = new WorkflowTestHelper(client);
+                    WorkflowName = workflowToTestName
+                });
+                logicAppTestManager.Setup();
 
-                    // Get workflow callback URL.                    
-                    var logicAppCallBackUrl = workflowTestHelper.GetCallBackUrl(workflowToTestName);
+                //Trigger the workflow
+                var content = new StringContent("{}", Encoding.UTF8, "application/json");
+                var response = logicAppTestManager.TriggerLogicAppWithPost(content);
 
-                    // Run the workflow.
-                    var workFlowRequestContent = new StringContent(inputMessage, Encoding.UTF8, "application/json");
-                    
-                    var response = client.PostAsync(logicAppCallBackUrl, workFlowRequestContent).Result;
-                    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);                
-                    
-                    // Check workflow run status.
-                    // Note this makes an assumption its the most recent run (need to check on this)
-                    workflowTestHelper.AssertMostRecentRunWasSuccessful(workflowToTestName);
+                //Check you have a run id
+                Assert.IsNotNull(response.WorkFlowRunId);
 
-                    //Get the run id for the run
-                    var runId = workflowTestHelper.GetMostRecentRunId(workflowToTestName);
-                    
-                    //Check Actions run                                        
-                    workflowTestHelper.AssertActionSucceeded(workflowToTestName, runId, "Response");      
-                }
+                //If the workflow started running we can load the run history at this point to start checking it later
+                logicAppTestManager.LoadWorkflowRunHistory();
+
+                //We can check the trigger status was successful
+                var triggerStatus = logicAppTestManager.GetTriggerStatus();
+                Assert.AreEqual(triggerStatus, TriggerStatus.Succeeded);
+
+                //Check the response action worked
+                var actionStatus = logicAppTestManager.GetActionStatus("Response");
+                Assert.AreEqual(actionStatus, ActionStatus.Succeeded);
+
+                //Check the run status completed successfully
+                var workflowRunStatus = logicAppTestManager.GetWorkflowRunStatus();
+                Assert.AreEqual(WorkflowRunStatus.Succeeded, workflowRunStatus);
             }
         }
     }

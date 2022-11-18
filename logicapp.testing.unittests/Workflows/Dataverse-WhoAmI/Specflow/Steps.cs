@@ -6,11 +6,14 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
-using TestFramework;
 using System.Dynamic;
 using System.Text;
 using LogicApp.Testing.UnitTests.Helpers;
 using TechTalk.SpecFlow;
+using IPB.LogicApp.Standard.Testing.Local;
+using IPB.LogicApp.Standard.Testing.Local.Host;
+using IPB.LogicApp.Standard.Testing.Model.WorkflowRunActionDetails;
+using IPB.LogicApp.Standard.Testing.Model.WorkflowRunOverview;
 
 namespace logicapp.testing.unittests.Workflows.Test_Stateful_HelloWorld.Specflow
 {
@@ -57,52 +60,64 @@ namespace logicapp.testing.unittests.Workflows.Test_Stateful_HelloWorld.Specflow
         [Given(@"the logic app test manager is setup")]
          public void GivenTheLogicAppTestManagerIsSetup()
          {            
+            //Setup the workflow test host and save to context
             var workflowTestHostBuilder = new WorkflowTestHostBuilder();
             workflowTestHostBuilder.Workflows.Add(TestContext.WorkFlowToTest);
-
             TestContext.WorkflowTestHost = workflowTestHostBuilder.LoadAndBuild();
-            TestContext.WorkflowTestHelper = new WorkflowTestHelper(TestContext.ManagementClient);
+
+            //Setup the client to call the workflow runtime and save to context
+            var logicAppTestManager = new LogicAppTestManager(new LogicAppTestManagerArgs
+            {
+                WorkflowName = TestContext.WorkFlowToTest
+            });
+            logicAppTestManager.Setup();
+            TestContext.LogicAppTestManager = logicAppTestManager;
          }
 
         [When(@"I send the message to the logic app")]
          public void WhenISendTheMessageToTheLogicApp()
          {
-            var logicAppCallBackUrl = TestContext.WorkflowTestHelper.GetCallBackUrl(TestContext.WorkFlowToTest);
-            var workFlowRequestContent = new StringContent(TestContext.Request, Encoding.UTF8, "application/json");
-            var response = TestContext.ManagementClient.PostAsync(logicAppCallBackUrl, workFlowRequestContent).Result;
+            var content = new StringContent("{}", Encoding.UTF8, "application/json");
+            var response = TestContext.LogicAppTestManager.TriggerLogicAppWithPost(content);
             TestContext.Response = response;
-            
          }
 
         [Then(@"the logic app will start running")]
          public void ThenTheLogicAppWillStartRunning()
          {
-             TestContext.RunId = TestContext.WorkflowTestHelper.GetMostRecentRunId(TestContext.WorkFlowToTest);
+             TestContext.RunId = TestContext.Response.WorkFlowRunId;
+             Assert.IsNotNull(TestContext.RunId);
+
+            //Load the run history
+            TestContext.LogicAppTestManager.LoadWorkflowRunHistory();
          }
 
         [Then(@"the logic app will receive the message")]
          public void ThenTheLogicAppWillReceiveTheMessage()
          {
-             TestContext.WorkflowTestHelper.AssertActionSucceeded(TestContext.WorkFlowToTest, TestContext.RunId, "Compose");
+            var actionStatus = TestContext.LogicAppTestManager.GetActionStatus("Compose");
+            Assert.AreEqual(actionStatus, ActionStatus.Succeeded);
          }
 
         [Then(@"the logic app will send a reply")]
          public void ThenTheLogicAppWillSendAReply()
          {
-             TestContext.WorkflowTestHelper.AssertActionSucceeded(TestContext.WorkFlowToTest, TestContext.RunId, "Response");
-             Assert.AreEqual(HttpStatusCode.OK, TestContext.Response.StatusCode); 
+            var actionStatus = TestContext.LogicAppTestManager.GetActionStatus("Response");
+            Assert.AreEqual(actionStatus, ActionStatus.Succeeded);
          }
 
         [Then(@"the logic app will complete successfully")]
          public void ThenTheLogicAppWillCompleteSuccessfully()
          {             
-             TestContext.WorkflowTestHelper.AssertMostRecentRunWasSuccessful(TestContext.WorkFlowToTest);
+            var runStatus = TestContext.LogicAppTestManager.GetWorkflowRunStatus();
+            Assert.AreEqual(runStatus, WorkflowRunStatus.Succeeded);
          }
 
         [Then(@"the logic app will call dataverse who am i")]
          public void ThenTheLogicAppWillCallDataverseWhoAmI()
          {
-            TestContext.WorkflowTestHelper.AssertActionSucceeded(TestContext.WorkFlowToTest, TestContext.RunId, "HTTP_-_Dataverse_Who_Am_I");
+            var actionStatus = TestContext.LogicAppTestManager.GetActionStatus("HTTP_-_Dataverse_Who_Am_I");
+            Assert.AreEqual(actionStatus, ActionStatus.Succeeded);
          }
          
     }

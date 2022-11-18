@@ -5,6 +5,10 @@ Feature: Ship Instruction Processor
     So that I can asssociate railcars to orders
     I want the transport system to be notified when an order is ready to be dispatched
 
+This feature is about processing a ship instruction event which is processed and looks up data
+from the source system and it will then be transformed to the target system format where a flat file
+message is sent to the destination transport management system.
+
 <a href="https://tfscsc.visualstudio.com/_git/IntegrationPlaybook?path=/vs-code-logicapp-testing/Documentation.ShipInstruction.md">Click here for more info</a>
 
 
