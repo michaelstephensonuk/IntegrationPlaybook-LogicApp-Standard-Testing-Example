@@ -9,6 +9,7 @@ using System.Text;
 using TechTalk.SpecFlow;
 using System.IO;
 using logicapp.testing.acceptancetests.Helpers;
+using IPB.LogicApp.Standard.Testing;
 
 namespace logicapp.testing.acceptancetests.Maps.ShipInstructionMap
 {
